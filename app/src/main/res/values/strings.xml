@@ -1,3 +1,10 @@
 <resources>
-    <string name="app_name">TurnosMedicos</string>
+    <string name="app_name">Turnos Medicos</string>
+    
+    <!-- LOGIN -->
+    <string name="tv_hi">¡Hola!</string>
+    <string name="tv_enter_credentials">Ingresa tu DNI y contraseña para acceder a tu perfil:</string>
+    <string name="label_dni">DNI</string>
+    <string name="label_password">Contraseña</string>
+    <string name="btn_enter">Ingresar</string>
 </resources>
