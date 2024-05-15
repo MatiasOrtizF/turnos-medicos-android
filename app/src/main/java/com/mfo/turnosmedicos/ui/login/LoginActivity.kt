@@ -9,7 +9,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
-import com.mfo.turnosmedicos.MainActivity
+import com.mfo.turnosmedicos.ui.home.MainActivity
 import com.mfo.turnosmedicos.databinding.ActivityLoginBinding
 import com.mfo.turnosmedicos.domain.model.LoginRequest
 import com.mfo.turnosmedicos.utils.PreferencesHelper

@@ -1,10 +1,17 @@
 <resources>
     <string name="app_name">Turnos Medicos</string>
-    
+
     <!-- LOGIN -->
     <string name="tv_hi">¡Hola!</string>
     <string name="tv_enter_credentials">Ingresa tu DNI y contraseña para acceder a tu perfil:</string>
     <string name="label_dni">DNI</string>
     <string name="label_password">Contraseña</string>
     <string name="btn_enter">Ingresar</string>
+
+    <!-- HOME -->
+    <string name="tv_appointments">Turnos</string>
+    <string name="tv_manage_appointments">Gestiona turnos con nuestros profesionales en los Centros Medicos, mantene tu agenda de consultas integrada y conserva el registro de los profesionales que visitaste</string>
+    <string name="btn_schedule_appointment">Sacar turnos</string>
+    <string name="btn_my_appointments">Mis turnos</string>
+    <string name="btn_history_appointments">Historial de atencion</string>
 </resources>

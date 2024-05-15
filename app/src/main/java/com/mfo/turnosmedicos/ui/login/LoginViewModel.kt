@@ -19,7 +19,6 @@ class LoginViewModel @Inject constructor(private val postLoginUseCase: PostLogin
     val state: StateFlow<LoginState> = _state
 
     fun authenticationUser(loginRequest: LoginRequest) {
-        println("estos son los datos de ingreso: $loginRequest")
         viewModelScope.launch {
             _state.value = LoginState.Loading
             try {
