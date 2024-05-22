@@ -1,31 +1,34 @@
-package com.mfo.turnosmedicos.ui.home
+package com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary
 
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.StyleSpan
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
-import com.mfo.turnosmedicos.databinding.ActivityMainBinding
-import com.mfo.turnosmedicos.ui.historyAppointments.HistoryAppointmentsActivity
+import com.mfo.turnosmedicos.databinding.ActivityScheduleAppointmentBinding
+import com.mfo.turnosmedicos.ui.home.MainState
+import com.mfo.turnosmedicos.ui.home.MainViewModel
 import com.mfo.turnosmedicos.ui.login.LoginActivity
-import com.mfo.turnosmedicos.ui.myAppointments.MyAppointmentsActivity
-import com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary.ScheduleAppointmentActivity
+import com.mfo.turnosmedicos.ui.scheduleAppointment.searcher.SearcherActivity
 import com.mfo.turnosmedicos.utils.PreferencesHelper
 import com.mfo.turnosmedicos.utils.PreferencesHelper.set
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
-
-    private lateinit var binding: ActivityMainBinding
+class ScheduleAppointmentActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityScheduleAppointmentBinding
     private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ActivityScheduleAppointmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         initUI()
@@ -36,8 +39,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUI() {
+        initListeners()
         initUIState()
-        initUIListeners()
+    }
+
+    private fun initListeners() {
+        binding.btnNext.setOnClickListener {
+            val intent = Intent(this, SearcherActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun initUIState() {
@@ -52,26 +63,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun initUIListeners() {
-        binding.btnScheduleAppointment.setOnClickListener {
-            val intent = Intent(this, ScheduleAppointmentActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        binding.btnMyAppointments.setOnClickListener {
-            val intent = Intent(this, MyAppointmentsActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        binding.btnHistoryAppointments.setOnClickListener {
-            val intent = Intent(this, HistoryAppointmentsActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-    }
-
     private fun loadingState() {
-        binding.pbMain.isVisible = true
+        binding.pbScheduleAppointment.isVisible = true
     }
 
     private fun errorState(error: String) {
@@ -83,9 +76,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun successState(state: MainState.Success) {
-        println(state.user)
-        binding.pbMain.isVisible = false
-        binding.llMain.isVisible = true
+        binding.pbScheduleAppointment.isVisible = false
+        binding.llScheduleAppointment.isVisible = true
+        binding.tvBeneficiary.text = state.user.lastName + " " + state.user.name
+        val email = binding.tvEmail.text.toString() + " " + state.user.email
+
+        val spannableString = SpannableString(email)
+
+        spannableString.setSpan(
+            StyleSpan(Typeface.BOLD),
+            0,
+            binding.tvEmail.text.toString().length,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        binding.tvEmail.text = spannableString
     }
 
     private fun clearSessionPreferences() {

@@ -1,6 +1,10 @@
 <resources>
     <string name="app_name">Turnos Medicos</string>
 
+    <!-- GLOBAL -->
+    <string name="tv_speciality">Especialidad</string>
+    <string name="tv_doctor">Profesional</string>
+
     <!-- LOGIN -->
     <string name="tv_hi">¡Hola!</string>
     <string name="tv_enter_credentials">Ingresa tu DNI y contraseña para acceder a tu perfil:</string>
@@ -10,8 +14,80 @@
 
     <!-- HOME -->
     <string name="tv_appointments">Turnos</string>
-    <string name="tv_manage_appointments">Gestiona turnos con nuestros profesionales en los Centros Medicos, mantene tu agenda de consultas integrada y conserva el registro de los profesionales que visitaste</string>
+    <string name="tv_manage_appointments">Gestioná turnos con nuestros profesionales en los Centros Médicos, mantené tu agenda de consultas integrada y conservá el registro de los profesionales que visitaste.</string>
     <string name="btn_schedule_appointment">Sacar turnos</string>
     <string name="btn_my_appointments">Mis turnos</string>
-    <string name="btn_history_appointments">Historial de atencion</string>
+    <string name="btn_history_appointments">Historial de atención</string>
+
+    <!-- MY APPOINTMENTS -->
+    <string name="tv_my_appointments">Mis turnos</string>
+    <string name="tv_not_appointments">No contás con turnos programados. Para solicitar uno, presioná aquí.</string>
+
+    <!-- SCHEDULE APPOINTMENT -->
+    <string name="tv_beneficiary">Beneficiaria/o</string>
+    <string name="tv_dates_contact">Tus datos de contacto son:</string>
+    <string name="tv_telephone">Teléfono:</string>
+    <string name="tv_cellphone">Célular:</string>
+    <string name="tv_email">Correo electrónico: </string>
+    <string name="tv_before">Antes de continuar, si los datos de contacto no son correctos, actualizalos presionando aquí.</string>
+    <string name="btn_next">Siguiente</string>
+    <string name="btn_previous">Anterior</string>
+
+    <!-- Searcher -->
+    <string name="tv_searcher">Buscador</string>
+    <string name="btn_one">1</string>
+    <string name="btn_two">2</string>
+    <string name="btn_three">3</string>
+    <string name="btn_four">4</string>
+    
+    <!-- Speciality -->
+    <string name="tv_cardiology">Cardiology</string>
+    <string name="tv_cardiology_es">Cardiología</string>
+
+    <string name="tv_internal_medicine">Internal medicine</string>
+    <string name="tv_internal_medicine_es">Medicina Interna</string>
+
+    <string name="tv_dermatology">Dermatology</string>
+    <string name="tv_dermatology_es">Dermatología</string>
+
+    <string name="tv_diabetology">Diabetology</string>
+    <string name="tv_diabetology_es">Diabetología</string>
+
+    <string name="tv_nursing">Nursing</string>
+    <string name="tv_nursing_es">Enfermería</string>
+
+    <string name="tv_speech_therapy">Speech therapy</string>
+    <string name="tv_speech_therapy_es">Fonoaudiología</string>
+
+    <string name="tv_hepatology">Hepatology</string>
+    <string name="tv_hepatology_es">Hepatología</string>
+
+    <string name="tv_infectology">Infectology</string>
+    <string name="tv_infectology_es">Infectología</string>
+
+    <string name="tv_general_medicine">General medicine</string>
+    <string name="tv_general_medicine_es">Medicina General</string>
+
+    <string name="tv_pulmonology">Pulmonology</string>
+    <string name="tv_pulmonology_es">Neumonología</string>
+
+    <string name="tv_neurology">Neurology</string>
+    <string name="tv_neurology_es">Neurología</string>
+
+    <string name="tv_nutrition">Nutrition</string>
+    <string name="tv_nutrition_es">Nutrición</string>
+
+    <string name="tv_ophthalmology">Ophthalmology</string>
+    <string name="tv_ophthalmology_es">Oftalmología</string>
+
+    <string name="tv_orthopedics">Orthopedics</string>
+    <string name="tv_orthopedics_es">Ortopedia</string>
+
+    <string name="tv_traumatology">Traumatology</string>
+    <string name="tv_traumatology_es">Traumatología</string>
+
+    <!-- MY APPOINTMENT -->
+    <string name="tv_complete_name">Nombre completo</string>
+    <string name="btn_cancel">Cancelar</string>
+
 </resources>

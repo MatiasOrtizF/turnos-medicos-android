@@ -8,53 +8,67 @@
     android:padding="35dp"
     tools:context=".ui.home.MainActivity">
 
-
-    <TextView
+    <LinearLayout
+        android:id="@+id/llMain"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_appointments"
-        android:gravity="center_horizontal"
-        android:textColor="@color/primary"
-        android:textSize="22sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="20dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_manage_appointments"
-        android:gravity="center_horizontal"
-        android:textSize="18sp"
-        android:layout_marginTop="10dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_appointments"
+            android:gravity="center_horizontal"
+            android:textColor="@color/primary"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnScheduleAppointment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_btn_appointments"
-        android:text="@string/btn_schedule_appointment"
-        android:textColor="@color/primary"
-        android:textStyle="bold"
-        android:layout_marginTop="30dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tv_manage_appointments"
+            android:gravity="center_horizontal"
+            android:textSize="18sp"
+            android:layout_marginTop="10dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnMyAppointments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_btn_appointments"
-        android:text="@string/btn_my_appointments"
-        android:textColor="@color/primary"
-        android:textStyle="bold"
-        android:layout_marginTop="15dp"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnScheduleAppointment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn_appointments"
+            android:text="@string/btn_schedule_appointment"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:layout_marginTop="30dp"/>
 
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnHistoryAppointments"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_btn_appointments"
-        android:text="@string/btn_history_appointments"
-        android:textColor="@color/primary"
-        android:textStyle="bold"
-        android:layout_marginTop="15dp"/>
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnMyAppointments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn_appointments"
+            android:text="@string/btn_my_appointments"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/btnHistoryAppointments"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_btn_appointments"
+            android:text="@string/btn_history_appointments"
+            android:textColor="@color/primary"
+            android:textStyle="bold"
+            android:layout_marginTop="15dp"/>
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pbMain"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"/>
 
 </LinearLayout>
