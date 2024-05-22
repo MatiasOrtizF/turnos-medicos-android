@@ -61,7 +61,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:layout_marginHorizontal="10dp"/>
+            android:textSize="17sp"
+            android:layout_marginHorizontal="8dp"/>
 
         <ImageView
             android:layout_width="30dp"
@@ -75,7 +76,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:layout_marginStart="10dp"/>
+            android:textSize="17sp"
+            android:layout_marginStart="8dp"/>
 
     </LinearLayout>
 

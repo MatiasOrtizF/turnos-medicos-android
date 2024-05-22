@@ -47,7 +47,7 @@ class MyAppointmentsActivity : AppCompatActivity() {
     private fun initList() {
         appointmentAdapter = MyAppointmentAdapter(
             onItemSelected = {
-
+                println("cancelar el turno: ${it.id}")
             }
         )
         binding.rvAppointment.apply {
@@ -86,8 +86,9 @@ class MyAppointmentsActivity : AppCompatActivity() {
 
     private fun successState(state: MyAppointmentsState.Success) {
         binding.pbMyAppointment.isVisible = false
+        binding.tvMyAppointments.isVisible = true
         if(state.myAppointment.isEmpty()) {
-            binding.llMyAppointments.isVisible = true
+            binding.tvNotAppointments.isVisible = true
         } else {
             binding.rvAppointment.isVisible = true
             appointmentAdapter.updateList(state.myAppointment)

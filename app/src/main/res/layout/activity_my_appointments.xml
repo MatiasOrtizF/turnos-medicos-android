@@ -8,31 +8,26 @@
     android:padding="35dp"
     tools:context=".ui.myAppointments.MyAppointmentsActivity">
 
-    <LinearLayout
-        android:id="@+id/llMyAppointments"
+    <TextView
+        android:id="@+id/tvMyAppointments"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:layout_height="wrap_content"
+        android:text="@string/tv_my_appointments"
+        android:gravity="center_horizontal"
+        android:textColor="@color/primary"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="20dp"
+        android:visibility="gone"/>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_my_appointments"
-            android:gravity="center_horizontal"
-            android:textColor="@color/primary"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="20dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/tv_not_appointments"
-            android:textSize="18sp"
-            android:layout_marginTop="10dp"/>
-
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvNotAppointments"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/tv_not_appointments"
+        android:textSize="18sp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvAppointment"

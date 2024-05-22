@@ -13,7 +13,8 @@ class MyAppointmentViewHolder(view: View): RecyclerView.ViewHolder(view) {
         binding.tvName.text = appointment.user.lastName + " " + appointment.user.name
         binding.tvSpeciality.text = appointment.speciality
         binding.tvDoctor.text =  appointment.doctor.lastName + " " + appointment.doctor.name
-        //binding.tvDay.text = appointment.date.toString()
+        binding.tvDay.text = appointment.date.substring(0, 10)
+        binding.tvHour.text = appointment.date.substring(appointment.date.length - 5)
 
         binding.btnCancelAppointment.setOnClickListener { onItemSelected(appointment) }
     }
