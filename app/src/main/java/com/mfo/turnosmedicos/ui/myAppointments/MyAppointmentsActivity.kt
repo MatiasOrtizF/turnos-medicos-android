@@ -5,18 +5,21 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.material.snackbar.Snackbar
 import com.mfo.turnosmedicos.databinding.ActivityMyAppointmentsBinding
 import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.ui.myAppointments.adapter.MyAppointmentAdapter
 import com.mfo.turnosmedicos.utils.PreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MyAppointmentsActivity : AppCompatActivity() {
@@ -32,8 +35,6 @@ class MyAppointmentsActivity : AppCompatActivity() {
         val preferences = PreferencesHelper.defaultPrefs(this)
         val token = preferences.getString("jwt", "").toString()
 
-        println("mi token es: $token")
-
         myAppointmentsViewModel.getAllMyAppointment(token)
         initUI()
     }
@@ -46,14 +47,42 @@ class MyAppointmentsActivity : AppCompatActivity() {
 
     private fun initList() {
         appointmentAdapter = MyAppointmentAdapter(
-            onItemSelected = {
-                println("cancelar el turno: ${it.id}")
+            onItemSelected = { id, position ->
+                deleteToAppointments(id, position)
             }
         )
         binding.rvAppointment.apply {
             layoutManager = LinearLayoutManager(this@MyAppointmentsActivity)
             adapter = appointmentAdapter
         }
+    }
+
+    private fun deleteToAppointments(id: Long, position: Int) {
+        val context = binding.root.context
+        val builder = AlertDialog.Builder(context)
+
+        builder.setTitle("Cancel appointment")
+        builder.setMessage("Are you sure you want to cancel this appointment?")
+
+        builder.setPositiveButton("Yes") { _, _ ->
+            val preferences = PreferencesHelper.defaultPrefs(this)
+            val token = preferences.getString("jwt", "").toString()
+            lifecycleScope.launch {
+                val isDelete = myAppointmentsViewModel.cancelAppointment(token, id)
+                if (isDelete) {
+                    withContext(Dispatchers.Main) {
+                        appointmentAdapter.onDeleteItem(position)
+                        //Toast.makeText(this@MyAppointmentsActivity, "Turno cancelado", Toast.LENGTH_SHORT).show()
+                        Snackbar.make(binding.root, "Turno cancelado", Snackbar.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        builder.setNegativeButton("Cancel", null)
+
+        val dialog = builder.create()
+        dialog.show()
     }
 
     private fun initListeners() {

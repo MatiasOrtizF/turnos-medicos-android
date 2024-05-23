@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mfo.turnosmedicos.data.network.response.AppointmentResponse
 import com.mfo.turnosmedicos.domain.model.SpecialityInfo
+import com.mfo.turnosmedicos.domain.usecase.DeleteAppointmentUseCase
 import com.mfo.turnosmedicos.domain.usecase.GetAllAppointmentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -14,7 +15,7 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MyAppointmentsViewModel @Inject constructor(private val getAllAppointmentUseCase: GetAllAppointmentUseCase): ViewModel() {
+class MyAppointmentsViewModel @Inject constructor(private val getAllAppointmentUseCase: GetAllAppointmentUseCase, private val deleteAppointmentUseCase: DeleteAppointmentUseCase): ViewModel() {
     private var _appointment = MutableStateFlow<List<AppointmentResponse>>(emptyList())
     val appointment: StateFlow<List<AppointmentResponse>> = _appointment
 
@@ -37,6 +38,20 @@ class MyAppointmentsViewModel @Inject constructor(private val getAllAppointmentU
                 val errorMessage: String = e.message.toString()
                 _state.value = MyAppointmentsState.Error(errorMessage)
             }
+        }
+    }
+
+    suspend fun cancelAppointment(authorization: String, id: Long): Boolean {
+        return try {
+            _state.value = MyAppointmentsState.Loading
+            withContext(Dispatchers.IO) {
+                deleteAppointmentUseCase(authorization, id)
+                true
+            }
+        } catch (e: Exception) {
+            val errorMessage: String = e.message.toString()
+            _state.value = MyAppointmentsState.Error(errorMessage)
+            false
         }
     }
 }

@@ -8,7 +8,7 @@ import com.mfo.turnosmedicos.databinding.ItemAppointmentBinding
 class MyAppointmentViewHolder(view: View): RecyclerView.ViewHolder(view) {
     private val binding = ItemAppointmentBinding.bind(view)
 
-    fun bind(appointment: AppointmentResponse, onItemSelected: (AppointmentResponse) -> Unit) {
+    fun bind(appointment: AppointmentResponse, onItemSelected: (Long, Int) -> Unit) {
 
         binding.tvName.text = appointment.user.lastName + " " + appointment.user.name
         binding.tvSpeciality.text = appointment.speciality
@@ -16,6 +16,6 @@ class MyAppointmentViewHolder(view: View): RecyclerView.ViewHolder(view) {
         binding.tvDay.text = appointment.date.substring(0, 10)
         binding.tvHour.text = appointment.date.substring(appointment.date.length - 5)
 
-        binding.btnCancelAppointment.setOnClickListener { onItemSelected(appointment) }
+        binding.btnCancelAppointment.setOnClickListener { onItemSelected(appointment.id, adapterPosition) }
     }
 }

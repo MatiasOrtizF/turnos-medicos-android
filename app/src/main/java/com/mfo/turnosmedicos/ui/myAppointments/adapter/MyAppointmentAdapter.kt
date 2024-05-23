@@ -6,10 +6,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.mfo.turnosmedicos.R
 import com.mfo.turnosmedicos.data.network.response.AppointmentResponse
 
-class MyAppointmentAdapter(private var appointmentList: List<AppointmentResponse> = emptyList(), private val onItemSelected:(AppointmentResponse) -> Unit): RecyclerView.Adapter<MyAppointmentViewHolder>() {
-    fun updateList(list: List<AppointmentResponse>) {
+class MyAppointmentAdapter(private var appointmentList: MutableList<AppointmentResponse> = mutableListOf(), private val onItemSelected:(Long, Int) -> Unit): RecyclerView.Adapter<MyAppointmentViewHolder>() {
+    fun updateList(list: MutableList<AppointmentResponse>) {
         appointmentList = list
         notifyDataSetChanged()
+    }
+
+    fun onDeleteItem(position: Int) {
+        appointmentList.removeAt(position)
+        notifyItemRemoved(position)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAppointmentViewHolder {
