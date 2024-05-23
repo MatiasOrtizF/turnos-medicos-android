@@ -74,6 +74,11 @@ class MyAppointmentsActivity : AppCompatActivity() {
                         appointmentAdapter.onDeleteItem(position)
                         //Toast.makeText(this@MyAppointmentsActivity, "Turno cancelado", Toast.LENGTH_SHORT).show()
                         Snackbar.make(binding.root, "Turno cancelado", Snackbar.LENGTH_SHORT).show()
+                        if(appointmentAdapter.itemCount < 1) {
+                            binding.tvNotAppointments.isVisible = true
+                            binding.rvAppointment.isVisible = false
+                            binding.pbMyAppointment.isVisible = false
+                        }
                     }
                 }
             }
