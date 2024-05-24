@@ -8,6 +8,7 @@
     tools:context=".ui.scheduleAppointment.searcher.SearcherActivity">
 
     <LinearLayout
+        android:id="@+id/llSearcher"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -59,6 +60,7 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/navSearcher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -103,5 +105,14 @@
             android:textColor="@color/primary"/>
 
     </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/pbSearcher"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

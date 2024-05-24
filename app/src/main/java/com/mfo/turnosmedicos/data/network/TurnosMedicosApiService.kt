@@ -1,9 +1,11 @@
 package com.mfo.turnosmedicos.data.network
 
 import com.mfo.turnosmedicos.data.network.response.AppointmentResponse
+import com.mfo.turnosmedicos.data.network.response.DoctorResponse
 import com.mfo.turnosmedicos.data.network.response.LoginResponse
 import com.mfo.turnosmedicos.data.network.response.UserResponse
 import com.mfo.turnosmedicos.domain.model.AppointmentRequest
+import com.mfo.turnosmedicos.domain.model.Doctor
 import com.mfo.turnosmedicos.domain.model.LoginRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -18,8 +20,16 @@ interface TurnosMedicosApiService {
     @POST("login")
     suspend fun authenticationUser(@Body loginRequest: LoginRequest): LoginResponse
 
+    // User
     @GET("user")
     suspend fun getUserInfo(@Query ("token") token: String): UserResponse
+
+    // Doctor
+    @GET("doctor/{speciality}")
+    suspend fun getDoctorBySpeciality(
+        @Header ("Authorization") authorization: String,
+        @Path ("speciality") speciality: String
+    ): List<DoctorResponse>
 
     // Appointment
     @POST("appointment")
