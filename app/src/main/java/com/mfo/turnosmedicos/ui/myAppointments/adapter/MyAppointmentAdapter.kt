@@ -19,7 +19,7 @@ class MyAppointmentAdapter(private var appointmentList: MutableList<AppointmentR
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyAppointmentViewHolder {
         return MyAppointmentViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_appointment, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_my_appointment, parent, false)
         )
     }
 

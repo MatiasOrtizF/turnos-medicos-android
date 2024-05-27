@@ -72,27 +72,18 @@
             android:id="@+id/btnGoToScheduleAppointment"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/bg_btn_schedule_appointment"
-            android:text="@string/btn_one"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:layout_marginEnd="10dp"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/bg_btn_schedule_appointment"
-            android:text="@string/btn_two"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            android:layout_marginEnd="10dp"/>
-
-        <androidx.appcompat.widget.AppCompatButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
             android:background="@drawable/bg_btn_schedule_appointment_white"
-            android:text="@string/btn_three"
             android:textColor="@color/primary"
+            android:text="@string/btn_one"
+            android:textSize="17sp"
+            android:layout_marginEnd="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_btn_schedule_appointment"
+            android:textColor="@color/white"
+            android:text="@string/btn_two"
             android:textSize="17sp"
             android:layout_marginEnd="10dp"/>
 
@@ -100,9 +91,18 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:background="@drawable/bg_btn_schedule_appointment_white"
-            android:text="@string/btn_four"
+            android:textColor="@color/primary"
+            android:text="@string/btn_three"
             android:textSize="17sp"
-            android:textColor="@color/primary"/>
+            android:layout_marginEnd="10dp"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/bg_btn_schedule_appointment_white"
+            android:textColor="@color/primary"
+            android:text="@string/btn_four"
+            android:textSize="17sp" />
 
     </LinearLayout>
 

@@ -1,94 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
+<androidx.appcompat.widget.AppCompatButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:gravity="center_horizontal"
-    android:padding="20dp">
+    android:background="@drawable/bg_btn_hour_appointment"
+    android:textColor="@color/primary"
+    android:text="13:00"
+    android:textSize="18sp"
+    android:layout_margin="10dp">
 
-    <TextView
-        style="@style/titleStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/tv_complete_name"/>
-
-    <TextView
-        android:id="@+id/tvName"
-        style="@style/dateStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        style="@style/titleStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/tv_speciality"/>
-
-    <TextView
-        android:id="@+id/tvSpeciality"
-        style="@style/dateStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        style="@style/titleStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
-        android:text="@string/tv_doctor"/>
-
-    <TextView
-        android:id="@+id/tvDoctor"
-        style="@style/dateStyle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:src="@drawable/ic_calender"
-            android:tint="@color/blue"/>
-
-        <TextView
-            android:id="@+id/tvDay"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textSize="17sp"
-            android:layout_marginHorizontal="8dp"/>
-
-        <ImageView
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:gravity="center_vertical"
-            android:src="@drawable/ic_clock"
-            android:tint="@color/blue"/>
-
-        <TextView
-            android:id="@+id/tvHour"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_vertical"
-            android:textSize="17sp"
-            android:layout_marginStart="8dp"/>
-
-    </LinearLayout>
-
-    <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/btnCancelAppointment"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/bg_btn_global"
-        android:text="@string/btn_cancel"
-        android:textColor="@color/white"
-        android:textStyle="bold"
-        android:layout_marginTop="15dp"/>
-
-</LinearLayout>
+</androidx.appcompat.widget.AppCompatButton>
