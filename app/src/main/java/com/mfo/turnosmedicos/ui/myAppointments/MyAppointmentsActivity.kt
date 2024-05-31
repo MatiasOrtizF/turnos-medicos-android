@@ -24,7 +24,7 @@ import kotlinx.coroutines.withContext
 @AndroidEntryPoint
 class MyAppointmentsActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMyAppointmentsBinding
-    private lateinit var appointmentAdapter: MyAppointmentAdapter
+    private lateinit var myAppointmentAdapter: MyAppointmentAdapter
     private val myAppointmentsViewModel: MyAppointmentsViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,14 +46,14 @@ class MyAppointmentsActivity : AppCompatActivity() {
     }
 
     private fun initList() {
-        appointmentAdapter = MyAppointmentAdapter(
+        myAppointmentAdapter = MyAppointmentAdapter(
             onItemSelected = { id, position ->
                 deleteToAppointments(id, position)
             }
         )
         binding.rvAppointment.apply {
             layoutManager = LinearLayoutManager(this@MyAppointmentsActivity)
-            adapter = appointmentAdapter
+            adapter = myAppointmentAdapter
         }
     }
 
@@ -71,10 +71,10 @@ class MyAppointmentsActivity : AppCompatActivity() {
                 val isDelete = myAppointmentsViewModel.cancelAppointment(token, id)
                 if (isDelete) {
                     withContext(Dispatchers.Main) {
-                        appointmentAdapter.onDeleteItem(position)
+                        myAppointmentAdapter.onDeleteItem(position)
                         //Toast.makeText(this@MyAppointmentsActivity, "Turno cancelado", Toast.LENGTH_SHORT).show()
                         Snackbar.make(binding.root, "Turno cancelado", Snackbar.LENGTH_SHORT).show()
-                        if(appointmentAdapter.itemCount < 1) {
+                        if(myAppointmentAdapter.itemCount < 1) {
                             binding.tvNotAppointments.isVisible = true
                             binding.rvAppointment.isVisible = false
                             binding.pbMyAppointment.isVisible = false
@@ -125,7 +125,7 @@ class MyAppointmentsActivity : AppCompatActivity() {
             binding.tvNotAppointments.isVisible = true
         } else {
             binding.rvAppointment.isVisible = true
-            appointmentAdapter.updateList(state.myAppointment)
+            myAppointmentAdapter.updateList(state.myAppointment)
         }
     }
 

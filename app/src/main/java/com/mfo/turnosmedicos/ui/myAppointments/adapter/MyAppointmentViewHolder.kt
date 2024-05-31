@@ -3,10 +3,10 @@ package com.mfo.turnosmedicos.ui.myAppointments.adapter
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.mfo.turnosmedicos.data.network.response.AppointmentResponse
-import com.mfo.turnosmedicos.databinding.ItemAppointmentBinding
+import com.mfo.turnosmedicos.databinding.ItemMyAppointmentBinding
 
 class MyAppointmentViewHolder(view: View): RecyclerView.ViewHolder(view) {
-    private val binding = ItemAppointmentBinding.bind(view)
+    private val binding = ItemMyAppointmentBinding.bind(view)
 
     fun bind(appointment: AppointmentResponse, onItemSelected: (Long, Int) -> Unit) {
 

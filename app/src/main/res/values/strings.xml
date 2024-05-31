@@ -39,10 +39,6 @@
     <string name="btn_two">2</string>
     <string name="btn_three">3</string>
     <string name="btn_four">4</string>
-
-    <!-- Appointment -->
-    <style name="tv_appointment">Turno</style>
-    <style name="tv_select_hour">Seleccioná un horario</style>
     
     <!-- Speciality -->
     <string name="tv_cardiology">Cardiology</string>
@@ -93,5 +89,11 @@
     <!-- MY APPOINTMENT -->
     <string name="tv_complete_name">Nombre completo</string>
     <string name="btn_cancel">Cancelar</string>
+
+    <!-- Appointment -->
+    <string name="tv_appointment">turno</string>
+    <string name="tv_select_hour">Seleccioná un horario</string>
+    <string name="description_ic_previous">Icon previous</string>
+    <string name="description_ic_next">Icon next</string>
 
 </resources>

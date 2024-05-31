@@ -1,11 +1,11 @@
 package com.mfo.turnosmedicos.data.network
 
+import com.mfo.turnosmedicos.data.network.response.AppointmentAvailableResponse
 import com.mfo.turnosmedicos.data.network.response.AppointmentResponse
 import com.mfo.turnosmedicos.data.network.response.DoctorResponse
 import com.mfo.turnosmedicos.data.network.response.LoginResponse
 import com.mfo.turnosmedicos.data.network.response.UserResponse
 import com.mfo.turnosmedicos.domain.model.AppointmentRequest
-import com.mfo.turnosmedicos.domain.model.Doctor
 import com.mfo.turnosmedicos.domain.model.LoginRequest
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -25,7 +25,7 @@ interface TurnosMedicosApiService {
     suspend fun getUserInfo(@Query ("token") token: String): UserResponse
 
     // Doctor
-    @GET("doctor/{speciality}")
+    @GET("doctor/bySpeciality/{speciality}")
     suspend fun getDoctorBySpeciality(
         @Header ("Authorization") authorization: String,
         @Path ("speciality") speciality: String
@@ -46,4 +46,11 @@ interface TurnosMedicosApiService {
         @Header ("Authorization") authorization: String,
         @Path ("id") id: Long
     ): Boolean
+
+    // Day Of Service
+    @GET("appointment/{id}")
+    suspend fun getAppointmentAvailable(
+        @Header ("Authorization") authorization: String,
+        @Path ("id") id: Long
+    ): AppointmentAvailableResponse
 }
