@@ -31,6 +31,12 @@ interface TurnosMedicosApiService {
         @Path ("speciality") speciality: String
     ): List<DoctorResponse>
 
+    @GET("doctor/{id}")
+    suspend fun getDoctorById(
+        @Header ("Authorization") authorization: String,
+        @Path ("id") id: Long
+    ): DoctorResponse
+
     // Appointment
     @POST("appointment")
     suspend fun addAppointment(
@@ -47,7 +53,6 @@ interface TurnosMedicosApiService {
         @Path ("id") id: Long
     ): Boolean
 
-    // Day Of Service
     @GET("appointment/{id}")
     suspend fun getAppointmentAvailable(
         @Header ("Authorization") authorization: String,

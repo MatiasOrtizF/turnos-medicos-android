@@ -45,6 +45,8 @@ class RepositoryImpl @Inject constructor(private val apiService: TurnosMedicosAp
         return null
     }
 
+    // Doctor
+
     override suspend fun getDoctorBySpeciality(authorization: String, speciality: String): List<DoctorResponse>? {
         runCatching {
             val appointments = apiService.getDoctorBySpeciality(authorization, speciality)
@@ -53,6 +55,20 @@ class RepositoryImpl @Inject constructor(private val apiService: TurnosMedicosAp
             }
         }
             .onSuccess { appointments -> return appointments }
+            .onFailure { throwable ->
+                val errorMessage = when (throwable) {
+                    is HttpException -> throwable.response()?.errorBody()?.string()
+                    else -> null
+                } ?: "An error occurred: ${throwable.message}"
+                Log.i("mfo", "Error occurred: $errorMessage")
+                throw Exception(errorMessage)
+            }
+        return null
+    }
+
+    override suspend fun getDoctorById(token: String, id: Long): DoctorResponse? {
+        runCatching { apiService.getDoctorById(token, id)}
+            .onSuccess { return it.toDomain() }
             .onFailure { throwable ->
                 val errorMessage = when (throwable) {
                     is HttpException -> throwable.response()?.errorBody()?.string()

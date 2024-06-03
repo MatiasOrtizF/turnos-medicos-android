@@ -16,6 +16,7 @@ interface Repository {
 
     //doctor
     suspend fun getDoctorBySpeciality(authorization: String, speciality: String): List<DoctorResponse>?
+    suspend fun getDoctorById(authorization: String, id: Long): DoctorResponse?
 
     // appointment
     suspend fun addAppointment(authorization: String, appointmentRequest: AppointmentRequest): AppointmentResponse?

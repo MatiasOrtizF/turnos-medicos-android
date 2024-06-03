@@ -97,7 +97,7 @@ class SearcherActivity : AppCompatActivity() {
     }
 
     private fun initSpinnerDoctor(state: SearcherState.Success) {
-        val doctors = state.doctors.map { DoctorResponse(it.id, it.name, it.lastName) }
+        val doctors = state.doctors.map { DoctorResponse(it.id, it.name, it.lastName, it.speciality) }
 
         val adapter = object: ArrayAdapter<DoctorResponse>(this, android.R.layout.simple_list_item_1, doctors) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
@@ -138,7 +138,6 @@ class SearcherActivity : AppCompatActivity() {
 
         binding.btnNext.setOnClickListener {
             if(selectedDoctorId != null) {
-                println("seleccionaste el doctor: $selectedDoctorId")
                 val intent = Intent(this, AppointmentActivity::class.java)
                 intent.putExtra("doctorId", selectedDoctorId)
                 startActivity(intent)

@@ -10,21 +10,16 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.mfo.turnosmedicos.databinding.ActivityAppointmentBinding
 import com.mfo.turnosmedicos.ui.login.LoginActivity
-import com.mfo.turnosmedicos.ui.myAppointments.MyAppointmentsState
-import com.mfo.turnosmedicos.ui.myAppointments.MyAppointmentsViewModel
-import com.mfo.turnosmedicos.ui.myAppointments.adapter.MyAppointmentAdapter
 import com.mfo.turnosmedicos.ui.scheduleAppointment.appointment.adapter.AppointmentAdapter
 import com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary.ScheduleAppointmentActivity
+import com.mfo.turnosmedicos.ui.scheduleAppointment.confirmation.ConfirmationActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.searcher.SearcherActivity
 import com.mfo.turnosmedicos.utils.PreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import java.util.Locale
 
 @AndroidEntryPoint
@@ -32,6 +27,9 @@ class AppointmentActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAppointmentBinding
     private lateinit var appointmentAdapter: AppointmentAdapter
     private val appointmentViewModel: AppointmentViewModel by viewModels()
+    private var selectedDoctorId: Long? = null
+    private var day: String? = null
+    private var hour: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +37,7 @@ class AppointmentActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val doctorId: Long = intent.getLongExtra("doctorId", -1)
+        selectedDoctorId = doctorId
 
         val preferences = PreferencesHelper.defaultPrefs(this)
         val token = preferences.getString("jwt", "").toString()
@@ -79,6 +78,14 @@ class AppointmentActivity : AppCompatActivity() {
         }
         binding.btnPrevious.setOnClickListener {
             goToSearcherActivity()
+        }
+        binding.btnNext.setOnClickListener {
+            val intent = Intent(this, ConfirmationActivity::class.java)
+            intent.putExtra("doctorId", selectedDoctorId)
+            intent.putExtra("day", day)
+            intent.putExtra("hour", hour)
+            startActivity(intent)
+            finish()
         }
         binding.btnNextDay.setOnClickListener {
             println("next day")

@@ -39,7 +39,7 @@
     <string name="btn_two">2</string>
     <string name="btn_three">3</string>
     <string name="btn_four">4</string>
-    
+
     <!-- Speciality -->
     <string name="tv_cardiology">Cardiology</string>
     <string name="tv_cardiology_es">Cardiología</string>
@@ -95,5 +95,11 @@
     <string name="tv_select_hour">Seleccioná un horario</string>
     <string name="description_ic_previous">Icon previous</string>
     <string name="description_ic_next">Icon next</string>
+
+    <!-- Confirmation -->
+    <string name="tv_confirmation">Confirmación</string>
+    <string name="ic_description_calender">Icon calender</string>
+    <string name="ic_description_clock">Icon clock</string>
+    <string name="btn_confirm">Confirmar</string>
 
 </resources>
