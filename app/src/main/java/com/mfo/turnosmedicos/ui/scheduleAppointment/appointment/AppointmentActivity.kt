@@ -58,7 +58,8 @@ class AppointmentActivity : AppCompatActivity() {
                 if(!binding.btnNext.isVisible) {
                     binding.btnNext.isVisible = true
                 }
-                println(it)
+                hour = it.substring(0,5)
+                println(hour)
             },
         )
         binding.rvAppointment.apply {
@@ -132,6 +133,7 @@ class AppointmentActivity : AppCompatActivity() {
 
         appointmentAdapter.updateList(state.appointmentAvailable.hour)
 
+        day = state.appointmentAvailable.day
         val formattedDateTime = formatDate(state.appointmentAvailable.day)
         binding.tvDay.text = formattedDateTime
     }

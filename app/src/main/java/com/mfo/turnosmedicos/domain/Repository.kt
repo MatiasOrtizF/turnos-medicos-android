@@ -7,6 +7,7 @@ import com.mfo.turnosmedicos.data.network.response.LoginResponse
 import com.mfo.turnosmedicos.data.network.response.UserResponse
 import com.mfo.turnosmedicos.domain.model.AppointmentRequest
 import com.mfo.turnosmedicos.domain.model.LoginRequest
+import org.json.JSONObject
 
 interface Repository {
     suspend fun authenticationUser(loginRequest: LoginRequest): LoginResponse?

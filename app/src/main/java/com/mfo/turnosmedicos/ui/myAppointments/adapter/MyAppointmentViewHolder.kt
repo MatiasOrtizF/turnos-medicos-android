@@ -11,10 +11,10 @@ class MyAppointmentViewHolder(view: View): RecyclerView.ViewHolder(view) {
     fun bind(appointment: AppointmentResponse, onItemSelected: (Long, Int) -> Unit) {
 
         binding.tvName.text = appointment.user.lastName + " " + appointment.user.name
-        binding.tvSpeciality.text = appointment.speciality
+        binding.tvSpeciality.text = appointment.doctor.speciality
         binding.tvDoctor.text =  appointment.doctor.lastName + " " + appointment.doctor.name
-        binding.tvDay.text = appointment.date.substring(0, 10)
-        binding.tvHour.text = appointment.date.substring(appointment.date.length - 5)
+        binding.tvDay.text = appointment.day
+        binding.tvHour.text = appointment.hour
 
         binding.btnCancelAppointment.setOnClickListener { onItemSelected(appointment.id, adapterPosition) }
     }

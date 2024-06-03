@@ -1,11 +1,11 @@
 package com.mfo.turnosmedicos.domain.model
 
-class AppointmentRequest(
+data class AppointmentRequest(
     val day: String?,
     val hour: String?,
     val doctor: DoctorId
 ) {
-    class DoctorId(
+    data class DoctorId(
         val id: Long?
     )
 }

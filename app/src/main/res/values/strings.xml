@@ -101,5 +101,7 @@
     <string name="ic_description_calender">Icon calender</string>
     <string name="ic_description_clock">Icon clock</string>
     <string name="btn_confirm">Confirmar</string>
+    <string name="tv_modal">En el caso de no poder asistir, podés cancelar el turno a través de la aplicacion.</string>
+    <string name="btn_modal">Aceptar</string>
 
 </resources>
