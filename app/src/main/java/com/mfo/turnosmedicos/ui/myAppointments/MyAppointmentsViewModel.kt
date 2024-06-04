@@ -31,8 +31,7 @@ class MyAppointmentsViewModel @Inject constructor(private val getAllAppointmentU
                     _appointment.value = result
                     _state.value = MyAppointmentsState.Success(result.toMutableList())
                 } else {
-                    _state.value =
-                        MyAppointmentsState.Error("Error occurred, Please try again later.")
+                    _state.value = MyAppointmentsState.Error("Error occurred, Please try again later.")
                 }
             } catch (e: Exception) {
                 val errorMessage: String = e.message.toString()
@@ -42,13 +41,17 @@ class MyAppointmentsViewModel @Inject constructor(private val getAllAppointmentU
     }
 
     suspend fun cancelAppointment(authorization: String, id: Long): Boolean {
+        _state.value = MyAppointmentsState.Loading
         return try {
-            _state.value = MyAppointmentsState.Loading
-            withContext(Dispatchers.IO) {
-                deleteAppointmentUseCase(authorization, id)
+            val result = withContext(Dispatchers.IO) { deleteAppointmentUseCase(authorization, id) }
+            if (result != null) {
+                _state.value = MyAppointmentsState.CancelSuccess(result)
                 true
+            } else {
+                _state.value = MyAppointmentsState.Error("Error occurred, Please try again later.")
+                false
             }
-        } catch (e: Exception) {
+            } catch (e: Exception) {
             val errorMessage: String = e.message.toString()
             _state.value = MyAppointmentsState.Error(errorMessage)
             false

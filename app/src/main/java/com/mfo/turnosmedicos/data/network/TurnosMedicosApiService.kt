@@ -49,10 +49,10 @@ interface TurnosMedicosApiService {
     suspend fun getAllAppointment(@Header ("Authorization") authorization: String): List<AppointmentResponse>
 
     @DELETE("appointment/{id}")
-    suspend fun cancelFavorite(
+    suspend fun cancelAppointment(
         @Header ("Authorization") authorization: String,
         @Path ("id") id: Long
-    ): Boolean
+    ): Map<String, Boolean>
 
     @GET("appointment/{id}")
     suspend fun getAppointmentAvailable(

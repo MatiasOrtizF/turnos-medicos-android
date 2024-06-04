@@ -13,13 +13,12 @@ import androidx.lifecycle.repeatOnLifecycle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.mfo.turnosmedicos.databinding.ActivityMyAppointmentsBinding
+import com.mfo.turnosmedicos.databinding.DialogCustomBinding
 import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.ui.myAppointments.adapter.MyAppointmentAdapter
 import com.mfo.turnosmedicos.utils.PreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 @AndroidEntryPoint
 class MyAppointmentsActivity : AppCompatActivity() {
@@ -59,34 +58,22 @@ class MyAppointmentsActivity : AppCompatActivity() {
 
     private fun deleteToAppointments(id: Long, position: Int) {
         val context = binding.root.context
+        val dialogCustomBinding = DialogCustomBinding.inflate(layoutInflater)
+
         val builder = AlertDialog.Builder(context)
-
-        builder.setTitle("Cancel appointment")
-        builder.setMessage("Are you sure you want to cancel this appointment?")
-
-        builder.setPositiveButton("Yes") { _, _ ->
-            val preferences = PreferencesHelper.defaultPrefs(this)
-            val token = preferences.getString("jwt", "").toString()
-            lifecycleScope.launch {
-                val isDelete = myAppointmentsViewModel.cancelAppointment(token, id)
-                if (isDelete) {
-                    withContext(Dispatchers.Main) {
-                        myAppointmentAdapter.onDeleteItem(position)
-                        //Toast.makeText(this@MyAppointmentsActivity, "Turno cancelado", Toast.LENGTH_SHORT).show()
-                        Snackbar.make(binding.root, "Turno cancelado", Snackbar.LENGTH_SHORT).show()
-                        if(myAppointmentAdapter.itemCount < 1) {
-                            binding.tvNotAppointments.isVisible = true
-                            binding.rvAppointment.isVisible = false
-                            binding.pbMyAppointment.isVisible = false
-                        }
-                    }
-                }
-            }
-        }
-
-        builder.setNegativeButton("Cancel", null)
+        builder.setView(dialogCustomBinding.root)
 
         val dialog = builder.create()
+
+        dialogCustomBinding.btnBack.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialogCustomBinding.btnAccept.setOnClickListener {
+            cancelAppointment(id, position)
+            dialog.dismiss()
+        }
+
         dialog.show()
     }
 
@@ -102,6 +89,7 @@ class MyAppointmentsActivity : AppCompatActivity() {
                         MyAppointmentsState.Loading -> loadingState()
                         is MyAppointmentsState.Error -> errorState(it.error)
                         is MyAppointmentsState.Success -> successState(it)
+                        is MyAppointmentsState.CancelSuccess -> cancelSuccess(it.success)
                     }
                 }
             }
@@ -110,6 +98,9 @@ class MyAppointmentsActivity : AppCompatActivity() {
 
     private fun loadingState() {
         binding.pbMyAppointment.isVisible = true
+        binding.tvMyAppointments.isVisible = false
+        binding.tvNotAppointments.isVisible = false
+        binding.rvAppointment.isVisible = false
     }
 
     private fun errorState(error: String) {
@@ -126,6 +117,34 @@ class MyAppointmentsActivity : AppCompatActivity() {
         } else {
             binding.rvAppointment.isVisible = true
             myAppointmentAdapter.updateList(state.myAppointment)
+        }
+    }
+
+    private fun cancelSuccess(cancelState: Boolean?) {
+        if(cancelState == true) {
+            binding.pbMyAppointment.isVisible = false
+            binding.tvMyAppointments.isVisible = true
+            binding.rvAppointment.isVisible = true
+            Snackbar.make(binding.root, "Turno cancelado", Snackbar.LENGTH_SHORT).show()
+        } else {
+            Snackbar.make(binding.root, "Failed to cancel appointment", Snackbar.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun cancelAppointment(id: Long, position: Int) {
+        val preferences = PreferencesHelper.defaultPrefs(this)
+        val token = preferences.getString("jwt", "").toString()
+
+        lifecycleScope.launch {
+            val cancelState = myAppointmentsViewModel.cancelAppointment(token, id)
+            cancelSuccess(cancelState ?: false)
+            if(cancelState) {
+                myAppointmentAdapter.onDeleteItem(position)
+                if(myAppointmentAdapter.itemCount < 1) {
+                    binding.tvNotAppointments.isVisible = true
+                    binding.rvAppointment.isVisible = false
+                }
+            }
         }
     }
 

@@ -4,6 +4,8 @@
     <!-- GLOBAL -->
     <string name="tv_speciality">Especialidad</string>
     <string name="tv_doctor">Profesional</string>
+    <string name="ic_description_calender">Icon calender</string>
+    <string name="ic_description_clock">Icon clock</string>
 
     <!-- LOGIN -->
     <string name="tv_hi">¡Hola!</string>
@@ -98,8 +100,6 @@
 
     <!-- Confirmation -->
     <string name="tv_confirmation">Confirmación</string>
-    <string name="ic_description_calender">Icon calender</string>
-    <string name="ic_description_clock">Icon clock</string>
     <string name="btn_confirm">Confirmar</string>
     <string name="tv_modal">En el caso de no poder asistir, podés cancelar el turno a través de la aplicacion.</string>
     <string name="btn_modal">Aceptar</string>

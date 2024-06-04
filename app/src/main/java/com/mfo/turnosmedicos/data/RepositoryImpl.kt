@@ -115,23 +115,20 @@ class RepositoryImpl @Inject constructor(private val apiService: TurnosMedicosAp
         return null
     }
 
-    override suspend fun cancelAppointment(authorization: String, id: Long): Boolean {
+    override suspend fun cancelAppointment(authorization: String, id: Long): Boolean? {
         return runCatching {
-            apiService.cancelFavorite(authorization, id)
-        }.fold(
-            onSuccess = {
-                true
-            },
-            onFailure = { throwable ->
+            val result = apiService.cancelAppointment(authorization, id)
+            result["deleted"] ?: false
+        }.onFailure { throwable ->
                 val errorMessage = when (throwable) {
                     is HttpException -> throwable.response()?.errorBody()?.string()
                     else -> null
                 } ?: "An error occurred: ${throwable.message}"
                 Log.i("mfo", "Error occurred: $errorMessage")
                 throw Exception(errorMessage)
-            }
-        )
+            }.getOrNull()
     }
+
     override suspend fun getAppointmentAvailable(token: String, id: Long): AppointmentAvailableResponse? {
         runCatching { apiService.getAppointmentAvailable(token, id)}
             .onSuccess { return it.toDomain() }

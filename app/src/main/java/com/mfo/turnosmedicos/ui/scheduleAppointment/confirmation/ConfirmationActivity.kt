@@ -66,7 +66,6 @@ class ConfirmationActivity : AppCompatActivity() {
     private fun initUIListeners() {
         binding.apply {
             btnConfirmAppointment.setOnClickListener {
-                println("hias")
                 sendAppointment()
             }
             binding.btnPrevious.setOnClickListener { onBackPressed() }
