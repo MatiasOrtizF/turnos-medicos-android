@@ -104,4 +104,8 @@
     <string name="tv_modal">En el caso de no poder asistir, podés cancelar el turno a través de la aplicacion.</string>
     <string name="btn_modal">Aceptar</string>
 
+    <!-- History -->
+    <string name="tv_history">Historial de atención</string>
+    <string name="tv_not_history">No contás con un historial de turnos. Para solicitar uno, presioná aquí.</string>
+
 </resources>

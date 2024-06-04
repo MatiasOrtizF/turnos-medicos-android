@@ -32,7 +32,7 @@
             android:name=".ui.myAppointments.MyAppointmentsActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.historyAppointments.HistoryAppointmentsActivity"
+            android:name=".ui.historyAppointments.HistoryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.login.LoginActivity"

@@ -10,7 +10,6 @@ import com.mfo.turnosmedicos.data.network.response.UserResponse
 import com.mfo.turnosmedicos.domain.Repository
 import com.mfo.turnosmedicos.domain.model.AppointmentRequest
 import com.mfo.turnosmedicos.domain.model.LoginRequest
-import org.json.JSONObject
 import retrofit2.HttpException
 import javax.inject.Inject
 
@@ -48,9 +47,9 @@ class RepositoryImpl @Inject constructor(private val apiService: TurnosMedicosAp
 
     // Doctor
 
-    override suspend fun getDoctorBySpeciality(authorization: String, speciality: String): List<DoctorResponse>? {
+    override suspend fun getDoctorBySpeciality(token: String, speciality: String): List<DoctorResponse>? {
         runCatching {
-            val appointments = apiService.getDoctorBySpeciality(authorization, speciality)
+            val appointments = apiService.getDoctorBySpeciality(token, speciality)
             appointments.map {
                 it.toDomain()
             }
@@ -96,9 +95,9 @@ class RepositoryImpl @Inject constructor(private val apiService: TurnosMedicosAp
         return null
     }
 
-    override suspend fun getAllAppointment(authorization: String): List<AppointmentResponse>? {
+    override suspend fun getAllAppointment(token: String): List<AppointmentResponse>? {
         runCatching {
-            val appointments = apiService.getAllAppointment(authorization)
+            val appointments = apiService.getAllAppointment(token)
             appointments.map {
                 it.toDomain()
             }
@@ -115,9 +114,9 @@ class RepositoryImpl @Inject constructor(private val apiService: TurnosMedicosAp
         return null
     }
 
-    override suspend fun cancelAppointment(authorization: String, id: Long): Boolean? {
+    override suspend fun cancelAppointment(token: String, id: Long): Boolean? {
         return runCatching {
-            val result = apiService.cancelAppointment(authorization, id)
+            val result = apiService.cancelAppointment(token, id)
             result["deleted"] ?: false
         }.onFailure { throwable ->
                 val errorMessage = when (throwable) {
@@ -132,6 +131,26 @@ class RepositoryImpl @Inject constructor(private val apiService: TurnosMedicosAp
     override suspend fun getAppointmentAvailable(token: String, id: Long): AppointmentAvailableResponse? {
         runCatching { apiService.getAppointmentAvailable(token, id)}
             .onSuccess { return it.toDomain() }
+            .onFailure { throwable ->
+                val errorMessage = when (throwable) {
+                    is HttpException -> throwable.response()?.errorBody()?.string()
+                    else -> null
+                } ?: "An error occurred: ${throwable.message}"
+                Log.i("mfo", "Error occurred: $errorMessage")
+                throw Exception(errorMessage)
+            }
+        return null
+    }
+
+    // history
+    override suspend fun getHistory(token: String): List<AppointmentResponse>? {
+        runCatching {
+            val appointments = apiService.getHistory(token)
+            appointments.map {
+                it.toDomain()
+            }
+        }
+            .onSuccess { appointments -> return appointments }
             .onFailure { throwable ->
                 val errorMessage = when (throwable) {
                     is HttpException -> throwable.response()?.errorBody()?.string()

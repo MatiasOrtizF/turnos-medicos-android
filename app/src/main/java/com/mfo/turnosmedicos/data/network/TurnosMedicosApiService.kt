@@ -59,4 +59,8 @@ interface TurnosMedicosApiService {
         @Header ("Authorization") authorization: String,
         @Path ("id") id: Long
     ): AppointmentAvailableResponse
+
+    // History
+    @GET("history")
+    suspend fun getHistory(@Header ("Authorization") authorization: String): List<AppointmentResponse>
 }

@@ -8,8 +8,7 @@ import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.mfo.turnosmedicos.databinding.ActivityMainBinding
-import com.mfo.turnosmedicos.domain.model.LoginRequest
-import com.mfo.turnosmedicos.ui.historyAppointments.HistoryAppointmentsActivity
+import com.mfo.turnosmedicos.ui.historyAppointments.HistoryActivity
 import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.ui.myAppointments.MyAppointmentsActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary.ScheduleAppointmentActivity
@@ -65,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             finish()
         }
         binding.btnHistoryAppointments.setOnClickListener {
-            val intent = Intent(this, HistoryAppointmentsActivity::class.java)
+            val intent = Intent(this, HistoryActivity::class.java)
             startActivity(intent)
             finish()
         }
