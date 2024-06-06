@@ -21,11 +21,11 @@ class AppointmentViewModel @Inject constructor(private val getAppointmentAvailab
     private var _state = MutableStateFlow<AppointmentState>(AppointmentState.Loading)
     val state: StateFlow<AppointmentState> = _state
 
-    fun getAppointmentAvailable(token: String, id: Long) {
+    fun getAppointmentAvailable(token: String, id: Long, dayNumber: Int) {
         viewModelScope.launch {
             _state.value = AppointmentState.Loading
             try {
-                val result = withContext(Dispatchers.IO) { getAppointmentAvailableUseCase(token, id) }
+                val result = withContext(Dispatchers.IO) { getAppointmentAvailableUseCase(token, id, dayNumber) }
                 if(result != null) {
                     _hour.value = result.hour
                     _state.value = AppointmentState.Success(result)

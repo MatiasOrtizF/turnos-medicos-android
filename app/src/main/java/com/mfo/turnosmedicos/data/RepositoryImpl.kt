@@ -128,8 +128,8 @@ class RepositoryImpl @Inject constructor(private val apiService: TurnosMedicosAp
             }.getOrNull()
     }
 
-    override suspend fun getAppointmentAvailable(token: String, id: Long): AppointmentAvailableResponse? {
-        runCatching { apiService.getAppointmentAvailable(token, id)}
+    override suspend fun getAppointmentAvailable(token: String, id: Long, dayNumber: Int): AppointmentAvailableResponse? {
+        runCatching { apiService.getAppointmentAvailable(token, id, dayNumber)}
             .onSuccess { return it.toDomain() }
             .onFailure { throwable ->
                 val errorMessage = when (throwable) {

@@ -23,7 +23,7 @@ interface Repository {
     suspend fun addAppointment(authorization: String, appointmentRequest: AppointmentRequest): AppointmentResponse?
     suspend fun getAllAppointment(authorization: String): List<AppointmentResponse>?
     suspend fun cancelAppointment(authorization: String, id: Long): Boolean?
-    suspend fun getAppointmentAvailable(authorization: String, id: Long): AppointmentAvailableResponse?
+    suspend fun getAppointmentAvailable(authorization: String, id: Long, dayNumber: Int): AppointmentAvailableResponse?
 
     // history
     suspend fun getHistory(authorization: String): List<AppointmentResponse>?

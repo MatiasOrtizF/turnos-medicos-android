@@ -30,6 +30,7 @@ class AppointmentActivity : AppCompatActivity() {
     private var selectedDoctorId: Long? = null
     private var day: String? = null
     private var hour: String? = null
+    private var dayNumber: Int? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,7 +43,8 @@ class AppointmentActivity : AppCompatActivity() {
         val preferences = PreferencesHelper.defaultPrefs(this)
         val token = preferences.getString("jwt", "").toString()
 
-        appointmentViewModel.getAppointmentAvailable(token, doctorId)
+        dayNumber = 0
+        appointmentViewModel.getAppointmentAvailable(token, doctorId, dayNumber!!)
         initUI()
     }
 
@@ -59,7 +61,6 @@ class AppointmentActivity : AppCompatActivity() {
                     binding.btnNext.isVisible = true
                 }
                 hour = it.substring(0,5)
-                println(hour)
             },
         )
         binding.rvAppointment.apply {
@@ -89,7 +90,7 @@ class AppointmentActivity : AppCompatActivity() {
             finish()
         }
         binding.btnNextDay.setOnClickListener {
-            println("next day")
+            nextDay()
         }
         binding.btnPreviousDay.setOnClickListener {
             println("previous day")
@@ -130,12 +131,22 @@ class AppointmentActivity : AppCompatActivity() {
         binding.pbAppointment.isVisible = false
         binding.llAppointment.isVisible = true
         binding.navAppointment.isVisible = true
+        dayNumber = state.appointmentAvailable.dayNumber
 
         appointmentAdapter.updateList(state.appointmentAvailable.hour)
 
         day = state.appointmentAvailable.day
         val formattedDateTime = formatDate(state.appointmentAvailable.day)
         binding.tvDay.text = formattedDateTime
+    }
+
+    private fun nextDay() {
+        val preferences = PreferencesHelper.defaultPrefs(this)
+        val token = preferences.getString("jwt", "").toString()
+
+        lifecycleScope.launch {
+            appointmentViewModel.getAppointmentAvailable(token, selectedDoctorId!!, dayNumber!!)
+        }
     }
 
     private fun goToLogin() {

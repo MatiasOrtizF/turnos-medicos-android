@@ -57,7 +57,8 @@ interface TurnosMedicosApiService {
     @GET("appointment/{id}")
     suspend fun getAppointmentAvailable(
         @Header ("Authorization") authorization: String,
-        @Path ("id") id: Long
+        @Path ("id") id: Long,
+        @Query ("dayNumber") dayNumber: Int
     ): AppointmentAvailableResponse
 
     // History

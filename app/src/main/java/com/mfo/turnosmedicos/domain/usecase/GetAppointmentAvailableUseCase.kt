@@ -5,5 +5,5 @@ import com.mfo.turnosmedicos.domain.Repository
 import javax.inject.Inject
 
 class GetAppointmentAvailableUseCase @Inject constructor(private val repository: Repository) {
-    suspend operator fun invoke(token: String, id: Long): AppointmentAvailableResponse? = repository.getAppointmentAvailable(token, id)
+    suspend operator fun invoke(token: String, id: Long, dayNumber: Int): AppointmentAvailableResponse? = repository.getAppointmentAvailable(token, id, dayNumber)
 }
