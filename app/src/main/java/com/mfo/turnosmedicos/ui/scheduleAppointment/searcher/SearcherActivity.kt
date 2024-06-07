@@ -22,7 +22,6 @@ import com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary.ScheduleAppointm
 import com.mfo.turnosmedicos.utils.PreferencesHelper
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
-import java.util.Locale
 
 @AndroidEntryPoint
 class SearcherActivity : AppCompatActivity() {
@@ -60,6 +59,7 @@ class SearcherActivity : AppCompatActivity() {
             ) {
                 val preferences = PreferencesHelper.defaultPrefs(this@SearcherActivity)
                 val token = preferences.getString("jwt", "").toString()
+
                 val selectedSpeciality = optionsSpeciality[position].lowercase()
                 searcherViewModel.getDoctorBySpeciality(token, selectedSpeciality)
 
@@ -81,8 +81,6 @@ class SearcherActivity : AppCompatActivity() {
 
     private fun loadingState() {
         binding.pbSearcher.isVisible = true
-        binding.llSearcher.isVisible = false
-        binding.navSearcher.isVisible = false
     }
 
     private fun errorState(error: String) {
@@ -92,8 +90,8 @@ class SearcherActivity : AppCompatActivity() {
     }
 
     private fun successState(state: SearcherState.Success) {
+        binding.pbSearcher.isVisible = false
         initSpinnerDoctor(state)
-        //binding.pbMyAppointment.isVisible = false
     }
 
     private fun initSpinnerDoctor(state: SearcherState.Success) {
@@ -135,7 +133,6 @@ class SearcherActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-
         binding.btnNext.setOnClickListener {
             if(selectedDoctorId != null) {
                 val intent = Intent(this, AppointmentActivity::class.java)
@@ -143,7 +140,6 @@ class SearcherActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                println("no seleccionaste")
                 Toast.makeText(this@SearcherActivity, "Please select ad doctor.", Toast.LENGTH_SHORT).show()
             }
         }

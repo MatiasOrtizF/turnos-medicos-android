@@ -54,39 +54,17 @@
                     android:text="@string/tv_dates_contact"
                     android:layout_marginBottom="15dp"/>
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvPhone"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_telephone"
-                        android:textStyle="bold"/>
+                    android:text="@string/tv_telephone"/>
 
-                    <TextView
-                        android:id="@+id/tvTelephone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <TextView
+                    android:id="@+id/tvCellphone"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tv_cellphone"
-                        android:textStyle="bold"/>
-
-                    <TextView
-                        android:id="@+id/tvCellphone"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"/>
-                </LinearLayout>
+                    android:text="@string/tv_cellphone"/>
 
                 <TextView
                     android:id="@+id/tvEmail"

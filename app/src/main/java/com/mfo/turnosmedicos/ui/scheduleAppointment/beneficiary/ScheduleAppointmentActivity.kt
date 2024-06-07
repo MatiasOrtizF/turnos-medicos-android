@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
+import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
@@ -78,19 +79,26 @@ class ScheduleAppointmentActivity : AppCompatActivity() {
     private fun successState(state: MainState.Success) {
         binding.pbScheduleAppointment.isVisible = false
         binding.llScheduleAppointment.isVisible = true
-        binding.tvBeneficiary.text = state.user.lastName + " " + state.user.name
-        val email = binding.tvEmail.text.toString() + " " + state.user.email
+        binding.tvBeneficiary.text = "${state.user.lastName} ${state.user.name}"
 
-        val spannableString = SpannableString(email)
+        updateTextWithBoldPrefix(binding.tvPhone, state.user.phone.toString())
+        updateTextWithBoldPrefix(binding.tvCellphone, state.user.cellphone.toString())
+        updateTextWithBoldPrefix(binding.tvEmail, state.user.email)
+    }
+
+    private fun updateTextWithBoldPrefix(textView: TextView, suffix: String) {
+        val prefix = textView.text.toString()
+        val combinedText = "$prefix $suffix"
+        val spannableString = SpannableString(combinedText)
 
         spannableString.setSpan(
             StyleSpan(Typeface.BOLD),
             0,
-            binding.tvEmail.text.toString().length,
+            prefix.length,
             Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
         )
 
-        binding.tvEmail.text = spannableString
+        textView.text = spannableString
     }
 
     private fun clearSessionPreferences() {
