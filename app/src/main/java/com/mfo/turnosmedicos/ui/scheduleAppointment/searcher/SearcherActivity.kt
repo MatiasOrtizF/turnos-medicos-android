@@ -20,6 +20,7 @@ import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.appointment.AppointmentActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary.ScheduleAppointmentActivity
 import com.mfo.turnosmedicos.utils.PreferencesHelper
+import com.mfo.turnosmedicos.utils.ex.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -84,7 +85,7 @@ class SearcherActivity : AppCompatActivity() {
 
     private fun errorState(error: String) {
         binding.pbSearcher.isVisible = false
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
+        showToast("Error: $error")
         navigateToLogin()
     }
 
@@ -139,7 +140,7 @@ class SearcherActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             } else {
-                Toast.makeText(this@SearcherActivity, "Please select ad doctor.", Toast.LENGTH_SHORT).show()
+                showToast("Please select ad doctor.")
             }
         }
         binding.btnPrevious.setOnClickListener { navigateToScheduleAppointment() }

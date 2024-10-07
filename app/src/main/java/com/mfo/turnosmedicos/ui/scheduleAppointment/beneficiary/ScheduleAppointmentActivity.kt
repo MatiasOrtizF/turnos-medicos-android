@@ -8,7 +8,6 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +18,7 @@ import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.searcher.SearcherActivity
 import com.mfo.turnosmedicos.utils.ex.clearSessionPreferences
 import com.mfo.turnosmedicos.utils.ex.getToken
+import com.mfo.turnosmedicos.utils.ex.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -65,7 +65,7 @@ class ScheduleAppointmentActivity : AppCompatActivity() {
     }
 
     private fun errorState(error: String) {
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
+        showToast("Error: $error")
         if(error == "invalid token") {
             clearSessionPreferences()
             navigateToLogin()

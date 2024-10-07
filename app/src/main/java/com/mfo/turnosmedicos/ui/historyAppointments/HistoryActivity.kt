@@ -3,7 +3,6 @@ package com.mfo.turnosmedicos.ui.historyAppointments
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -14,6 +13,7 @@ import com.mfo.turnosmedicos.databinding.ActivityHistoryBinding
 import com.mfo.turnosmedicos.ui.historyAppointments.adapter.HistoryAdapter
 import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.utils.ex.getToken
+import com.mfo.turnosmedicos.utils.ex.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -64,7 +64,7 @@ class HistoryActivity : AppCompatActivity() {
 
     private fun errorState(error: String) {
         binding.pbHistory.isVisible = false
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
+        showToast("Error: $error")
         navigateToLogin()
     }
 

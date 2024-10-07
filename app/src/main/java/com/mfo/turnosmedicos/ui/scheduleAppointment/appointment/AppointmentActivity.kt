@@ -3,7 +3,6 @@ package com.mfo.turnosmedicos.ui.scheduleAppointment.appointment
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.Lifecycle
@@ -17,6 +16,7 @@ import com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary.ScheduleAppointm
 import com.mfo.turnosmedicos.ui.scheduleAppointment.confirmation.ConfirmationActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.searcher.SearcherActivity
 import com.mfo.turnosmedicos.utils.ex.getToken
+import com.mfo.turnosmedicos.utils.ex.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -99,7 +99,7 @@ class AppointmentActivity : AppCompatActivity() {
 
     private fun errorState(error: String) {
         binding.pbAppointment.isVisible = false
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
+        showToast("Error: $error")
         navigateToLogin()
     }
 

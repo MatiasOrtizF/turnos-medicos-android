@@ -15,6 +15,7 @@ import com.mfo.turnosmedicos.ui.home.MainActivity
 import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.utils.ex.clearSessionPreferences
 import com.mfo.turnosmedicos.utils.ex.getToken
+import com.mfo.turnosmedicos.utils.ex.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import org.json.JSONObject
@@ -73,7 +74,7 @@ class ConfirmationActivity : AppCompatActivity() {
     private fun errorState(error: String) {
         binding.pbConfirmation.isVisible = false
         println(error)
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
+        showToast("Error: $error")
         if(error == "Unauthorized: invalid token") {
             clearSessionPreferences()
             navigateToLogin()
@@ -101,7 +102,7 @@ class ConfirmationActivity : AppCompatActivity() {
 
             openModal()
         } else {
-            Toast.makeText(this, "Error: You might not have selected a date or a doctor.", Toast.LENGTH_SHORT).show()
+            showToast("Error: You might not have selected a date or a doctor.")
             navigateToLogin()
         }
     }

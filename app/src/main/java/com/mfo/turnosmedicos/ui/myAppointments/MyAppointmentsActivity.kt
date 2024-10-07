@@ -3,7 +3,6 @@ package com.mfo.turnosmedicos.ui.myAppointments
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
@@ -17,6 +16,7 @@ import com.mfo.turnosmedicos.databinding.DialogCustomBinding
 import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.ui.myAppointments.adapter.MyAppointmentAdapter
 import com.mfo.turnosmedicos.utils.ex.getToken
+import com.mfo.turnosmedicos.utils.ex.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -103,7 +103,7 @@ class MyAppointmentsActivity : AppCompatActivity() {
 
     private fun errorState(error: String) {
         binding.pbMyAppointment.isVisible = false
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
+        showToast("Error: $error")
         navigateToLogin()
     }
 
@@ -136,7 +136,7 @@ class MyAppointmentsActivity : AppCompatActivity() {
     private fun cancelAppointment(id: Long, position: Int) {
         lifecycleScope.launch {
             val cancelState = myAppointmentsViewModel.cancelAppointment(getToken(), id)
-            cancelSuccess(cancelState ?: false)
+            cancelSuccess(cancelState)
             if(cancelState) {
                 myAppointmentAdapter.onDeleteItem(position)
                 if(myAppointmentAdapter.itemCount < 1) {

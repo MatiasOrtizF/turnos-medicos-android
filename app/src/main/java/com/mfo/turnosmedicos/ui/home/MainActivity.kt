@@ -3,7 +3,6 @@ package com.mfo.turnosmedicos.ui.home
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
@@ -14,6 +13,7 @@ import com.mfo.turnosmedicos.ui.myAppointments.MyAppointmentsActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary.ScheduleAppointmentActivity
 import com.mfo.turnosmedicos.utils.ex.clearSessionPreferences
 import com.mfo.turnosmedicos.utils.ex.getToken
+import com.mfo.turnosmedicos.utils.ex.showToast
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun errorState(error: String) {
-        Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
+        showToast("Error: $error")
         if(error == "invalid token") {
             clearSessionPreferences()
             navigateToLogin()
