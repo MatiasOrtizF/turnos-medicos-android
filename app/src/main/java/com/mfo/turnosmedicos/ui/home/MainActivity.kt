@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
     private fun initUI() {
         mainViewModel.getUserInfo(getToken())
         initUIState()
-        initUIListeners()
+        initListeners()
     }
 
     private fun initUIState() {
@@ -42,13 +42,13 @@ class MainActivity : AppCompatActivity() {
                 when(it) {
                     MainState.Loading -> loadingState()
                     is MainState.Error -> errorState(it.error)
-                    is MainState.Success -> successState(it)
+                    is MainState.Success -> successState()
                 }
             }
         }
     }
 
-    private fun initUIListeners() {
+    private fun initListeners() {
         binding.apply {
             btnScheduleAppointment.setOnClickListener { navigateToScheduleAppointment() }
             btnMyAppointments.setOnClickListener { navigateToMyAppointments() }
@@ -68,7 +68,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun successState(state: MainState.Success) {
+    private fun successState() {
         binding.apply {
             pbMain.isVisible = false
             llMain.isVisible = true

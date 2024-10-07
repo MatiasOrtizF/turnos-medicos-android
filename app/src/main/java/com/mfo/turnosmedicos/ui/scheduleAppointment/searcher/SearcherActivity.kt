@@ -90,7 +90,11 @@ class SearcherActivity : AppCompatActivity() {
     }
 
     private fun successState(state: SearcherState.Success) {
-        binding.pbSearcher.isVisible = false
+        binding.apply {
+            pbSearcher.isVisible = false
+            llSearcher.isVisible = true
+            navSearcher.isVisible = true
+        }
         initSpinnerDoctor(state)
     }
 

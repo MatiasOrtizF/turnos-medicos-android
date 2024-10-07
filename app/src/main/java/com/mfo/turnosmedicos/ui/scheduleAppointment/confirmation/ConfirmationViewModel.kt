@@ -2,6 +2,7 @@ package com.mfo.turnosmedicos.ui.scheduleAppointment.confirmation
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mfo.turnosmedicos.data.network.Constants.ERROR_NETWORK_GENERAL
 import com.mfo.turnosmedicos.domain.model.AppointmentRequest
 import com.mfo.turnosmedicos.domain.usecase.GetDoctorByIdUseCase
 import com.mfo.turnosmedicos.domain.usecase.PostAppointmentUseCase
@@ -27,7 +28,7 @@ class ConfirmationViewModel @Inject constructor(private val getDoctorByIdUseCase
                 if(result != null) {
                     _state.value = ConfirmationState.Success(result)
                 } else {
-                    _state.value = ConfirmationState.Error("Error occurred, Please try again later.")
+                    _state.value = ConfirmationState.Error(ERROR_NETWORK_GENERAL)
                 }
             } catch (e: Exception) {
                 val errorMessage: String = e.message.toString()

@@ -2,6 +2,7 @@ package com.mfo.turnosmedicos.ui.scheduleAppointment.searcher
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mfo.turnosmedicos.data.network.Constants.ERROR_NETWORK_GENERAL
 import com.mfo.turnosmedicos.data.providers.SpecialityProvider
 import com.mfo.turnosmedicos.domain.model.SpecialityInfo
 import com.mfo.turnosmedicos.domain.usecase.GetDoctorBySpecialityUseCase
@@ -35,7 +36,7 @@ class SearcherViewModel @Inject constructor(specialityProvider: SpecialityProvid
                 if(result != null) {
                     _state.value = SearcherState.Success(result)
                 } else {
-                    _state.value = SearcherState.Error("Error occurred, Please try again later.")
+                    _state.value = SearcherState.Error(ERROR_NETWORK_GENERAL)
                 }
             } catch (e: Exception) {
                 val errorMessage: String = e.message.toString()

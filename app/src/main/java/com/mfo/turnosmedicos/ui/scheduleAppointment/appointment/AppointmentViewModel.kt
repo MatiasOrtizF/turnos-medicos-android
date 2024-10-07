@@ -2,6 +2,7 @@ package com.mfo.turnosmedicos.ui.scheduleAppointment.appointment
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mfo.turnosmedicos.data.network.Constants.ERROR_NETWORK_GENERAL
 import com.mfo.turnosmedicos.data.network.response.AppointmentAvailableResponse
 import com.mfo.turnosmedicos.data.network.response.AppointmentResponse
 import com.mfo.turnosmedicos.domain.usecase.GetAppointmentAvailableUseCase
@@ -30,7 +31,7 @@ class AppointmentViewModel @Inject constructor(private val getAppointmentAvailab
                     _hour.value = result.hour
                     _state.value = AppointmentState.Success(result)
                 } else {
-                    _state.value = AppointmentState.Error("Error occurred, Please try again later.")
+                    _state.value = AppointmentState.Error(ERROR_NETWORK_GENERAL)
                 }
             } catch (e: Exception) {
                 val errorMessage: String = e.message.toString()

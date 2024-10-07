@@ -2,6 +2,7 @@ package com.mfo.turnosmedicos.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mfo.turnosmedicos.data.network.Constants.ERROR_NETWORK_GENERAL
 import com.mfo.turnosmedicos.domain.model.LoginRequest
 import com.mfo.turnosmedicos.domain.usecase.PostLoginUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -21,16 +22,18 @@ class LoginViewModel @Inject constructor(private val postLoginUseCase: PostLogin
     fun authenticationUser(loginRequest: LoginRequest) {
         viewModelScope.launch {
             _state.value = LoginState.Loading
-            try {
-                val result = withContext(Dispatchers.IO) { postLoginUseCase(loginRequest) }
-                if(result != null) {
-                    _state.value = LoginState.Success(result.token)
-                } else {
-                    _state.value = LoginState.Error("ocurrio un error, por favor intente mas tarde")
+            if(loginRequest.dni.toString().trim().isNotEmpty() && loginRequest.password.trim().isNotEmpty()) {
+                try {
+                    val result = withContext(Dispatchers.IO) { postLoginUseCase(loginRequest) }
+                    if(result != null) {
+                        _state.value = LoginState.Success(result.token)
+                    } else {
+                        _state.value = LoginState.Error(ERROR_NETWORK_GENERAL)
+                    }
+                } catch (e: Exception) {
+                    val errorMessage: String = e.message.toString()
+                    _state.value = LoginState.Error(errorMessage)
                 }
-            } catch (e: Exception) {
-                val errorMessage: String = e.message.toString()
-                _state.value = LoginState.Error(errorMessage)
             }
         }
     }

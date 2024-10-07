@@ -39,9 +39,9 @@ class LoginActivity : AppCompatActivity() {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 loginViewModel.state.collect {
                     when(it) {
-                        is LoginState.Error -> errorState(it.error)
                         LoginState.Loading -> {}
                         is LoginState.Success -> successSate(it)
+                        is LoginState.Error -> errorState(it.error)
                     }
                 }
             }
@@ -49,10 +49,10 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun initListeners() {
         binding.btnLogin.setOnClickListener {
-            val dni = binding.etDni.text.toString().toIntOrNull() ?: 0
+            val dni = binding.etDni.text.toString().toInt()
             val password = binding.etPassword.text.toString()
-            val loginRequest = LoginRequest(dni, password)
 
+            val loginRequest = LoginRequest(dni, password)
             loginViewModel.authenticationUser(loginRequest)
             loadingState()
         }

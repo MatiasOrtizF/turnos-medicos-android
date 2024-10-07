@@ -3,8 +3,8 @@ package com.mfo.turnosmedicos.data.network
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.mfo.turnosmedicos.data.RepositoryImpl
+import com.mfo.turnosmedicos.data.network.Constants.BASE_URL
 import com.mfo.turnosmedicos.domain.Repository
-import com.mfo.turnosmedicos.utils.Constants
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -27,7 +27,7 @@ object NetworkModule {
     fun provideRetrofit(gson: Gson): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl(Constants.BASE_URL)
+            .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
     }

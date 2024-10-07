@@ -2,8 +2,8 @@ package com.mfo.turnosmedicos.ui.myAppointments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mfo.turnosmedicos.data.network.Constants.ERROR_NETWORK_GENERAL
 import com.mfo.turnosmedicos.data.network.response.AppointmentResponse
-import com.mfo.turnosmedicos.domain.model.SpecialityInfo
 import com.mfo.turnosmedicos.domain.usecase.DeleteAppointmentUseCase
 import com.mfo.turnosmedicos.domain.usecase.GetAllAppointmentUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -15,7 +15,10 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class MyAppointmentsViewModel @Inject constructor(private val getAllAppointmentUseCase: GetAllAppointmentUseCase, private val deleteAppointmentUseCase: DeleteAppointmentUseCase): ViewModel() {
+class MyAppointmentsViewModel @Inject constructor(
+    private val getAllAppointmentUseCase: GetAllAppointmentUseCase,
+    val deleteAppointmentUseCase: DeleteAppointmentUseCase
+): ViewModel() {
     private var _appointment = MutableStateFlow<List<AppointmentResponse>>(emptyList())
     val appointment: StateFlow<List<AppointmentResponse>> = _appointment
 
@@ -31,7 +34,7 @@ class MyAppointmentsViewModel @Inject constructor(private val getAllAppointmentU
                     _appointment.value = result
                     _state.value = MyAppointmentsState.Success(result.toMutableList())
                 } else {
-                    _state.value = MyAppointmentsState.Error("Error occurred, Please try again later.")
+                    _state.value = MyAppointmentsState.Error(ERROR_NETWORK_GENERAL)
                 }
             } catch (e: Exception) {
                 val errorMessage: String = e.message.toString()
@@ -48,7 +51,7 @@ class MyAppointmentsViewModel @Inject constructor(private val getAllAppointmentU
                 _state.value = MyAppointmentsState.CancelSuccess(result)
                 true
             } else {
-                _state.value = MyAppointmentsState.Error("Error occurred, Please try again later.")
+                _state.value = MyAppointmentsState.Error(ERROR_NETWORK_GENERAL)
                 false
             }
             } catch (e: Exception) {

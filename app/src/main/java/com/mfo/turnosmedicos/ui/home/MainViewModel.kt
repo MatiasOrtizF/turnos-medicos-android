@@ -2,8 +2,8 @@ package com.mfo.turnosmedicos.ui.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mfo.turnosmedicos.data.network.Constants.ERROR_NETWORK_GENERAL
 import com.mfo.turnosmedicos.domain.usecase.GetUserInfoUseCase
-import com.mfo.turnosmedicos.ui.login.LoginState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,9 +23,9 @@ class MainViewModel @Inject constructor(private val getUserInfoUseCase: GetUserI
             try {
                 val result = withContext(Dispatchers.IO) { getUserInfoUseCase(token) }
                 if(result != null) {
-                    _state.value = MainState.Success(result)
+                    _state.value = MainState.Success
                 } else {
-                    _state.value = MainState.Error("ocurrio un error, por favor intente mas tarde")
+                    _state.value = MainState.Error(ERROR_NETWORK_GENERAL)
                 }
             } catch (e: Exception) {
                 val errorMessage: String = e.message.toString()

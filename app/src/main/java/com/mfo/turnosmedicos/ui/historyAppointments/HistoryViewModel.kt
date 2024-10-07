@@ -2,6 +2,7 @@ package com.mfo.turnosmedicos.ui.historyAppointments
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.mfo.turnosmedicos.data.network.Constants.ERROR_NETWORK_GENERAL
 import com.mfo.turnosmedicos.data.network.response.AppointmentResponse
 import com.mfo.turnosmedicos.domain.usecase.GetHistoryUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -30,7 +31,7 @@ class HistoryViewModel @Inject constructor(private val getHistoryUseCase: GetHis
                     _state.value = HistoryState.Success(result.toMutableList())
                 } else {
                     _state.value =
-                        HistoryState.Error("Error occurred, Please try again later.")
+                        HistoryState.Error(ERROR_NETWORK_GENERAL)
                 }
             } catch (e: Exception) {
                 val errorMessage: String = e.message.toString()
