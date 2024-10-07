@@ -33,7 +33,6 @@ class SearcherActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearcherBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initUI()
     }
 
@@ -86,7 +85,7 @@ class SearcherActivity : AppCompatActivity() {
     private fun errorState(error: String) {
         binding.pbSearcher.isVisible = false
         Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
-        goToLogin()
+        navigateToLogin()
     }
 
     private fun successState(state: SearcherState.Success) {
@@ -143,21 +142,17 @@ class SearcherActivity : AppCompatActivity() {
                 Toast.makeText(this@SearcherActivity, "Please select ad doctor.", Toast.LENGTH_SHORT).show()
             }
         }
-        binding.btnPrevious.setOnClickListener {
-            goToScheduleAppointment()
-        }
-        binding.btnGoToScheduleAppointment.setOnClickListener {
-            goToScheduleAppointment()
-        }
+        binding.btnPrevious.setOnClickListener { navigateToScheduleAppointment() }
+        binding.btnGoToScheduleAppointment.setOnClickListener { navigateToScheduleAppointment() }
     }
 
-    private fun goToScheduleAppointment() {
+    private fun navigateToScheduleAppointment() {
         val intent = Intent(this, ScheduleAppointmentActivity::class.java)
         startActivity(intent)
         finish()
     }
 
-    private fun goToLogin() {
+    private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()

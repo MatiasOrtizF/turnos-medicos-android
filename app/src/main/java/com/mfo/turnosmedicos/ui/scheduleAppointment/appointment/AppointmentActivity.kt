@@ -16,7 +16,7 @@ import com.mfo.turnosmedicos.ui.scheduleAppointment.appointment.adapter.Appointm
 import com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary.ScheduleAppointmentActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.confirmation.ConfirmationActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.searcher.SearcherActivity
-import com.mfo.turnosmedicos.utils.PreferencesHelper
+import com.mfo.turnosmedicos.utils.ex.getToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -40,11 +40,8 @@ class AppointmentActivity : AppCompatActivity() {
         val doctorId: Long = intent.getLongExtra("doctorId", -1)
         selectedDoctorId = doctorId
 
-        val preferences = PreferencesHelper.defaultPrefs(this)
-        val token = preferences.getString("jwt", "").toString()
-
         dayNumber = 0
-        appointmentViewModel.getAppointmentAvailable(token, doctorId, dayNumber!!)
+        appointmentViewModel.getAppointmentAvailable(getToken(), doctorId, dayNumber!!)
         initUI()
     }
 
@@ -70,37 +67,16 @@ class AppointmentActivity : AppCompatActivity() {
     }
 
     private fun initListeners() {
-        binding.btnOne.setOnClickListener {
-            val intent = Intent(this, ScheduleAppointmentActivity::class.java)
-            startActivity(intent)
-            finish()
+        binding.apply {
+            btnOne.setOnClickListener { navigateToScheduleAppointment() }
+            btnTwo.setOnClickListener { navigateToSearcherActivity() }
+            btnPrevious.setOnClickListener { navigateToSearcherActivity() }
+            btnNext.setOnClickListener { navigateToConfirmation() }
+            btnNextDay.setOnClickListener { nextDay() }
+            btnPreviousDay.setOnClickListener {
+                println("previous day")
+            }
         }
-        binding.btnTwo.setOnClickListener {
-            goToSearcherActivity()
-        }
-        binding.btnPrevious.setOnClickListener {
-            goToSearcherActivity()
-        }
-        binding.btnNext.setOnClickListener {
-            val intent = Intent(this, ConfirmationActivity::class.java)
-            intent.putExtra("doctorId", selectedDoctorId)
-            intent.putExtra("day", day)
-            intent.putExtra("hour", hour)
-            startActivity(intent)
-            finish()
-        }
-        binding.btnNextDay.setOnClickListener {
-            nextDay()
-        }
-        binding.btnPreviousDay.setOnClickListener {
-            println("previous day")
-        }
-    }
-
-    private fun goToSearcherActivity() {
-        val intent = Intent(this, SearcherActivity::class.java)
-        startActivity(intent)
-        finish()
     }
 
     private fun initUIState() {
@@ -124,35 +100,28 @@ class AppointmentActivity : AppCompatActivity() {
     private fun errorState(error: String) {
         binding.pbAppointment.isVisible = false
         Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
-        goToLogin()
+        navigateToLogin()
     }
 
     private fun successState(state: AppointmentState.Success) {
-        binding.pbAppointment.isVisible = false
-        binding.llAppointment.isVisible = true
-        binding.navAppointment.isVisible = true
-        dayNumber = state.appointmentAvailable.dayNumber
+        binding.apply {
+            pbAppointment.isVisible = false
+            llAppointment.isVisible = true
+            navAppointment.isVisible = true
+            dayNumber = state.appointmentAvailable.dayNumber
 
-        appointmentAdapter.updateList(state.appointmentAvailable.hour)
+            appointmentAdapter.updateList(state.appointmentAvailable.hour)
 
-        day = state.appointmentAvailable.day
-        val formattedDateTime = formatDate(state.appointmentAvailable.day)
-        binding.tvDay.text = formattedDateTime
-    }
-
-    private fun nextDay() {
-        val preferences = PreferencesHelper.defaultPrefs(this)
-        val token = preferences.getString("jwt", "").toString()
-
-        lifecycleScope.launch {
-            appointmentViewModel.getAppointmentAvailable(token, selectedDoctorId!!, dayNumber!!)
+            day = state.appointmentAvailable.day
+            val formattedDateTime = formatDate(state.appointmentAvailable.day)
+            tvDay.text = formattedDateTime
         }
     }
 
-    private fun goToLogin() {
-        val intent = Intent(this, LoginActivity::class.java)
-        startActivity(intent)
-        finish()
+    private fun nextDay() {
+        lifecycleScope.launch {
+            appointmentViewModel.getAppointmentAvailable(getToken(), selectedDoctorId!!, dayNumber!!)
+        }
     }
 
     private fun formatDate(inputDate: String): String {
@@ -164,4 +133,29 @@ class AppointmentActivity : AppCompatActivity() {
         return outputFormat.format(date).replaceFirstChar { it.uppercase() }
     }
 
+    private fun navigateToScheduleAppointment() {
+        val intent = Intent(this, ScheduleAppointmentActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToSearcherActivity() {
+        val intent = Intent(this, SearcherActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+
+    private fun navigateToConfirmation() {
+        val intent = Intent(this, ConfirmationActivity::class.java)
+        intent.putExtra("doctorId", selectedDoctorId)
+        intent.putExtra("day", day)
+        intent.putExtra("hour", hour)
+        startActivity(intent)
+        finish()
+    }
+    private fun navigateToLogin() {
+        val intent = Intent(this, LoginActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
 }

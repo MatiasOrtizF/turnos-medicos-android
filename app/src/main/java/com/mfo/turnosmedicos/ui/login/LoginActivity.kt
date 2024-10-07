@@ -12,8 +12,7 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.mfo.turnosmedicos.ui.home.MainActivity
 import com.mfo.turnosmedicos.databinding.ActivityLoginBinding
 import com.mfo.turnosmedicos.domain.model.LoginRequest
-import com.mfo.turnosmedicos.utils.PreferencesHelper
-import com.mfo.turnosmedicos.utils.PreferencesHelper.set
+import com.mfo.turnosmedicos.utils.ex.saveToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initUI()
     }
 
@@ -61,31 +59,31 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun loadingState() {
-        binding.pbLogin.isVisible = true
-        binding.llLogin.isVisible = false
+        binding.apply {
+            pbLogin.isVisible = true
+            llLogin.isVisible = false
+        }
     }
 
     private fun errorState(error: String) {
-        binding.pbLogin.isVisible = false
-        binding.llLogin.isVisible = true
+        binding.apply {
+            pbLogin.isVisible = false
+            llLogin.isVisible = true
+        }
         val context = binding.root.context
         Toast.makeText(context, "Error: $error", Toast.LENGTH_SHORT).show()
     }
 
     private fun successSate(state: LoginState.Success) {
-        binding.pbLogin.isVisible = false
-        binding.llLogin.isVisible = true
-        val jwt: String = state.token
-        createSessionPreference(jwt)
-        goToHome()
+        binding.apply {
+            pbLogin.isVisible = false
+            llLogin.isVisible = true
+        }
+        saveToken(state.token)
+        navigateToHome()
     }
 
-    private fun createSessionPreference(jwt: String) {
-        val preferences = PreferencesHelper.defaultPrefs(this)
-        preferences["jwt"] = jwt
-    }
-
-    private fun goToHome() {
+    private fun navigateToHome() {
         val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()

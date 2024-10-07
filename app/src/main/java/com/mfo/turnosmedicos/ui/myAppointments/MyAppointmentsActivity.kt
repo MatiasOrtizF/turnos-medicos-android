@@ -16,7 +16,7 @@ import com.mfo.turnosmedicos.databinding.ActivityMyAppointmentsBinding
 import com.mfo.turnosmedicos.databinding.DialogCustomBinding
 import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.ui.myAppointments.adapter.MyAppointmentAdapter
-import com.mfo.turnosmedicos.utils.PreferencesHelper
+import com.mfo.turnosmedicos.utils.ex.getToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -30,15 +30,11 @@ class MyAppointmentsActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMyAppointmentsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-        val preferences = PreferencesHelper.defaultPrefs(this)
-        val token = preferences.getString("jwt", "").toString()
-
-        myAppointmentsViewModel.getAllMyAppointment(token)
         initUI()
     }
 
     private fun initUI() {
+        myAppointmentsViewModel.getAllMyAppointment(getToken())
         initList()
         initListeners()
         initUIState()
@@ -97,34 +93,40 @@ class MyAppointmentsActivity : AppCompatActivity() {
     }
 
     private fun loadingState() {
-        binding.pbMyAppointment.isVisible = true
-        binding.tvMyAppointments.isVisible = false
-        binding.tvNotAppointments.isVisible = false
-        binding.rvAppointment.isVisible = false
+        binding.apply {
+            pbMyAppointment.isVisible = true
+            tvMyAppointments.isVisible = false
+            tvNotAppointments.isVisible = false
+            rvAppointment.isVisible = false
+        }
     }
 
     private fun errorState(error: String) {
         binding.pbMyAppointment.isVisible = false
         Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
-        goToLogin()
+        navigateToLogin()
     }
 
     private fun successState(state: MyAppointmentsState.Success) {
-        binding.pbMyAppointment.isVisible = false
-        binding.tvMyAppointments.isVisible = true
-        if(state.myAppointment.isEmpty()) {
-            binding.tvNotAppointments.isVisible = true
-        } else {
-            binding.rvAppointment.isVisible = true
-            myAppointmentAdapter.updateList(state.myAppointment)
+        binding.apply {
+            pbMyAppointment.isVisible = false
+            tvMyAppointments.isVisible = true
+            if(state.myAppointment.isEmpty()) {
+                tvNotAppointments.isVisible = true
+            } else {
+                rvAppointment.isVisible = true
+                myAppointmentAdapter.updateList(state.myAppointment)
+            }
         }
     }
 
     private fun cancelSuccess(cancelState: Boolean?) {
         if(cancelState == true) {
-            binding.pbMyAppointment.isVisible = false
-            binding.tvMyAppointments.isVisible = true
-            binding.rvAppointment.isVisible = true
+            binding.apply {
+                pbMyAppointment.isVisible = false
+                tvMyAppointments.isVisible = true
+                rvAppointment.isVisible = true
+            }
             Snackbar.make(binding.root, "Turno cancelado", Snackbar.LENGTH_SHORT).show()
         } else {
             Snackbar.make(binding.root, "Failed to cancel appointment", Snackbar.LENGTH_SHORT).show()
@@ -132,23 +134,22 @@ class MyAppointmentsActivity : AppCompatActivity() {
     }
 
     private fun cancelAppointment(id: Long, position: Int) {
-        val preferences = PreferencesHelper.defaultPrefs(this)
-        val token = preferences.getString("jwt", "").toString()
-
         lifecycleScope.launch {
-            val cancelState = myAppointmentsViewModel.cancelAppointment(token, id)
+            val cancelState = myAppointmentsViewModel.cancelAppointment(getToken(), id)
             cancelSuccess(cancelState ?: false)
             if(cancelState) {
                 myAppointmentAdapter.onDeleteItem(position)
                 if(myAppointmentAdapter.itemCount < 1) {
-                    binding.tvNotAppointments.isVisible = true
-                    binding.rvAppointment.isVisible = false
+                    binding.apply {
+                        tvNotAppointments.isVisible = true
+                        rvAppointment.isVisible = false
+                    }
                 }
             }
         }
     }
 
-    private fun goToLogin() {
+    private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()

@@ -17,8 +17,8 @@ import com.mfo.turnosmedicos.ui.home.MainState
 import com.mfo.turnosmedicos.ui.home.MainViewModel
 import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.searcher.SearcherActivity
-import com.mfo.turnosmedicos.utils.PreferencesHelper
-import com.mfo.turnosmedicos.utils.PreferencesHelper.set
+import com.mfo.turnosmedicos.utils.ex.clearSessionPreferences
+import com.mfo.turnosmedicos.utils.ex.getToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -31,15 +31,11 @@ class ScheduleAppointmentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityScheduleAppointmentBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initUI()
-
-        val preferences = PreferencesHelper.defaultPrefs(this)
-        val token = preferences.getString("jwt", "").toString()
-        mainViewModel.getUserInfo(token)
     }
 
     private fun initUI() {
+        mainViewModel.getUserInfo(getToken())
         initListeners()
         initUIState()
     }
@@ -72,18 +68,20 @@ class ScheduleAppointmentActivity : AppCompatActivity() {
         Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
         if(error == "invalid token") {
             clearSessionPreferences()
-            goToLogin()
+            navigateToLogin()
         }
     }
 
     private fun successState(state: MainState.Success) {
-        binding.pbScheduleAppointment.isVisible = false
-        binding.llScheduleAppointment.isVisible = true
-        binding.tvBeneficiary.text = "${state.user.lastName} ${state.user.name}"
+        binding.apply {
+            pbScheduleAppointment.isVisible = false
+            llScheduleAppointment.isVisible = true
+            tvBeneficiary.text = "${state.user.lastName} ${state.user.name}"
 
-        updateTextWithBoldPrefix(binding.tvPhone, state.user.phone.toString())
-        updateTextWithBoldPrefix(binding.tvCellphone, state.user.cellphone.toString())
-        updateTextWithBoldPrefix(binding.tvEmail, state.user.email)
+            updateTextWithBoldPrefix(binding.tvPhone, state.user.phone.toString())
+            updateTextWithBoldPrefix(binding.tvCellphone, state.user.cellphone.toString())
+            updateTextWithBoldPrefix(binding.tvEmail, state.user.email)
+        }
     }
 
     private fun updateTextWithBoldPrefix(textView: TextView, suffix: String) {
@@ -101,12 +99,7 @@ class ScheduleAppointmentActivity : AppCompatActivity() {
         textView.text = spannableString
     }
 
-    private fun clearSessionPreferences() {
-        val preferences = PreferencesHelper.defaultPrefs(this)
-        preferences["jwt"] = ""
-    }
-
-    private fun goToLogin() {
+    private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()

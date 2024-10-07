@@ -12,8 +12,8 @@ import com.mfo.turnosmedicos.ui.historyAppointments.HistoryActivity
 import com.mfo.turnosmedicos.ui.login.LoginActivity
 import com.mfo.turnosmedicos.ui.myAppointments.MyAppointmentsActivity
 import com.mfo.turnosmedicos.ui.scheduleAppointment.beneficiary.ScheduleAppointmentActivity
-import com.mfo.turnosmedicos.utils.PreferencesHelper
-import com.mfo.turnosmedicos.utils.PreferencesHelper.set
+import com.mfo.turnosmedicos.utils.ex.clearSessionPreferences
+import com.mfo.turnosmedicos.utils.ex.getToken
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
@@ -27,15 +27,11 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         initUI()
-
-        val preferences = PreferencesHelper.defaultPrefs(this)
-        val token = preferences.getString("jwt", "").toString()
-        mainViewModel.getUserInfo(token)
     }
 
     private fun initUI() {
+        mainViewModel.getUserInfo(getToken())
         initUIState()
         initUIListeners()
     }
@@ -53,20 +49,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initUIListeners() {
-        binding.btnScheduleAppointment.setOnClickListener {
-            val intent = Intent(this, ScheduleAppointmentActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        binding.btnMyAppointments.setOnClickListener {
-            val intent = Intent(this, MyAppointmentsActivity::class.java)
-            startActivity(intent)
-            finish()
-        }
-        binding.btnHistoryAppointments.setOnClickListener {
-            val intent = Intent(this, HistoryActivity::class.java)
-            startActivity(intent)
-            finish()
+        binding.apply {
+            btnScheduleAppointment.setOnClickListener { navigateToScheduleAppointment() }
+            btnMyAppointments.setOnClickListener { navigateToMyAppointments() }
+            btnHistoryAppointments.setOnClickListener { navigateToHistory() }
         }
     }
 
@@ -78,22 +64,33 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Error: $error", Toast.LENGTH_SHORT).show()
         if(error == "invalid token") {
             clearSessionPreferences()
-            goToLogin()
+            navigateToLogin()
         }
     }
 
     private fun successState(state: MainState.Success) {
-        println(state.user)
-        binding.pbMain.isVisible = false
-        binding.llMain.isVisible = true
+        binding.apply {
+            pbMain.isVisible = false
+            llMain.isVisible = true
+        }
     }
 
-    private fun clearSessionPreferences() {
-        val preferences = PreferencesHelper.defaultPrefs(this)
-        preferences["jwt"] = ""
+    private fun navigateToScheduleAppointment() {
+        val intent = Intent(this, ScheduleAppointmentActivity::class.java)
+        startActivity(intent)
     }
 
-    private fun goToLogin() {
+    private fun navigateToMyAppointments() {
+        val intent = Intent(this, MyAppointmentsActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToHistory() {
+        val intent = Intent(this, HistoryActivity::class.java)
+        startActivity(intent)
+    }
+
+    private fun navigateToLogin() {
         val intent = Intent(this, LoginActivity::class.java)
         startActivity(intent)
         finish()
