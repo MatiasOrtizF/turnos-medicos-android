@@ -4,7 +4,7 @@ Aplicación Android para la gestión de turnos médicos, desarrollada con **Kotl
 
 Este repositorio contiene exclusivamente el **frontend/mobile** de la aplicación. El funcionamiento completo del sistema requiere el backend desarrollado con **Java y Spring Boot**.
 
-🔗 **Backend:** [Repositorio del Backend](URL_DEL_BACKEND)
+🔗 **Backend:** [Repositorio del Backend](https://github.com/MatiasOrtizF/turnos-medicos-server)
 
 ## ✨ Características
 
@@ -25,9 +25,9 @@ La aplicación utiliza **Clean Architecture** junto con el patrón **MVVM**, sep
 ```text
 app/
 ├── data/       # Acceso a datos y comunicación con la API
-├── di/         # Inyección de dependencias
 ├── domain/     # Modelos y lógica de negocio
-└── ui/         # Interfaces y ViewModels
+├── ui/         # Interfaces y ViewModels
+└── utils/      # Funciones y utilidades generales
 ```
 
 ## 🔌 Comunicación con el Backend
@@ -100,7 +100,7 @@ Para ejecutar correctamente la aplicación se necesita:
 ### Configuración
 
 1. Clonar este repositorio.
-2. Clonar y configurar el [Backend de Turnos Médicos](URL_DEL_BACKEND).
+2. Clonar y configurar el [Backend de Turnos Médicos](https://github.com/MatiasOrtizF/turnos-medicos-server).
 3. Iniciar el backend.
 4. Configurar en la aplicación la URL correspondiente a la API.
 5. Ejecutar la aplicación desde Android Studio.
